@@ -462,14 +462,3 @@ document.addEventListener('DOMContentLoaded', function() {
                                     }
                                 });
                             });
-
-                            // Run onboarding() every second for the first 5 minutes after DOMContentLoaded
-                            (function() {
-                                let start = Date.now();
-                                let interval = setInterval(() => {
-                                    onboarding();
-                                    if (Date.now() - start > 5 * 60 * 1000) { // 5 minutes
-                                        clearInterval(interval);
-                                    }
-                                }, 1000);
-                            })();
