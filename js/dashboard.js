@@ -1,5 +1,5 @@
 // FUNCTION TO HANDLE AUTHENTICATION VIA MAGIC LINK TOKENS AND FETCHING USER DATA
-//THIS IS PART OF GENERAL CODE FOR ALL PAGES REQUIRING AUTHENTICATION
+// THIS IS PART OF GENERAL CODE FOR ALL PAGES REQUIRING AUTHENTICATION
 async function handleMagicLinkLoginToken() {
     const params = new URLSearchParams(window.location.search);
     const tokenFromURL = params.get("token");
@@ -20,6 +20,9 @@ async function handleMagicLinkLoginToken() {
         return;
     }
 }
+
+// Call handleMagicLinkLoginToken before anything else
+document.addEventListener("DOMContentLoaded", handleMagicLinkLoginToken);
     
 async function fetchAndSyncAuthenticatedUser() {
     const loginToken = localStorage.getItem("loginToken");
@@ -459,3 +462,14 @@ document.addEventListener('DOMContentLoaded', function() {
                                     }
                                 });
                             });
+
+                            // Run onboarding() every second for the first 5 minutes after DOMContentLoaded
+                            (function() {
+                                let start = Date.now();
+                                let interval = setInterval(() => {
+                                    onboarding();
+                                    if (Date.now() - start > 5 * 60 * 1000) { // 5 minutes
+                                        clearInterval(interval);
+                                    }
+                                }, 1000);
+                            })();
