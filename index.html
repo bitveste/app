@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bitveste – Investor Dashboard | Real Store Capital & Profit Sharing Platform</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="dashboard">
+    <div id="preloader" class="preloader-wrapper">
+        <div class="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <div id="main-wrapper">
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xxl-12">
+                        <div class="header-content">
+                            <div class="header-left">
+                                <div class="brand-logo"><a class="mini-logo" href="index.html"><img src="images/logoi.png" alt="" width="40"></a></div>
+                                <div class="search">
+                                    <form id="searchForm" action="#">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="searchInput" placeholder="Search Here">
+                                            <span class="input-group-text"><i class="fi fi-br-search"></i></span>
+                                        </div>
+                                    </form>
+                                    <script>
+                                    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                                        if (e.key === 'Enter') {
+                                            e.preventDefault();
+                                            const query = this.value.toLowerCase().trim();
+                                            
+                                            const searchMap = {
+                                                'wallet': { page: 'wallets.html', section: null },
+                                                'profile': { page: 'settings-profile.html', section: null },
+                                                'settings': { page: 'settings.html', section: null },
+                                                'support': { page: 'support.html', section: null },
+                                                'affiliate': { page: 'affiliates.html', section: null },
+                                                'transaction': { page: 'index.html', section: '#transaction-history' },
+                                                'investment': { page: 'index.html', section: '#active-investments' },
+                                                'balance': { page: 'index.html', section: '#balance-trends' },
+                                                'home': { page: 'index.html', section: null }
+                                            };
+                                            
+                                            const result = Object.entries(searchMap).find(([key]) => key.includes(query) || query.includes(key));
+                                            
+                                            if (result) {
+                                                const [, { page, section }] = result;
+                                                if (page === 'index.html' && section) {
+                                                    document.querySelector(section)?.scrollIntoView({ behavior: 'smooth' });
+                                                } else {
+                                                    window.location.href = page;
+                                                }
+                                            } else {
+                                                showMessage('No results found for: ' + query, true);
+                                            }
+                                        }
+                                    });
+
+                                    function showMessage(message, isError = false) {
+                                        const messageBox = document.getElementById("message");
+                                        if (!messageBox) return;
+
+                                        const icon = isError
+                                            ? '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>'
+                                            : '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>';
+
+                                        messageBox.innerHTML = `${icon} ${message}`;
+                                        messageBox.className = isError ? 'error' : 'success';
+                                        messageBox.classList.add('show');
+
+                                        setTimeout(() => {
+                                            messageBox.classList.remove('show');
+                                        }, 5000);
+                                    }
+                                    </script>
+                                </div>
+                            </div>
+                            <div class="header-right">
+                                <div class="dark-light-toggle" onclick="themeToggle()">
+                                    <span class="dark"><i class="fi fi-rr-eclipse-alt"></i></span>
+                                    <span class="light"><i class="fi fi-rr-eclipse-alt"></i></span>
+                                </div>
+                                <div class="nav-item dropdown notification">
+                                    <div data-bs-toggle="dropdown">
+                                        <div class="notify-bell icon-menu">
+                                            <span><i class="fi fi-rs-bells"></i></span>
+                                        </div>
+                                    </div>
+                                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-end">
+                                        <div class="lists" id="notificationsList">
+                                            <!-- Notifications will be injected here -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown profile_log dropdown">
+                                    <div data-bs-toggle="dropdown">
+                                        <div class="user icon-menu active"><span><i class="fi fi-rr-user"></i></span></div>
+                                    </div>
+                                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu dropdown-menu-end">
+                                        <div class="user-email">
+                                            <div class="user">
+                                                <span class="thumb"><img id="avatarPreview" class="rounded-full" src="images/avatar/3.jpg" alt=""></span>
+                                                <div class="user-info">
+                                                    <h5 id="fullNameDisplay2">...</h5>
+                                                    <span id="emailDisplay">...</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a class="dropdown-item" href="settings-profile.html">
+                                            <span><i class="fi fi-rr-user"></i></span>
+                                            Profile
+                                        </a>
+                                        <a class="dropdown-item" href="wallets.html">
+                                            <span><i class="fi fi-rr-wallet"></i></span>
+                                            Wallets
+                                        </a>
+                                        <a class="dropdown-item" href="settings.html">
+                                            <span><i class="fi fi-rr-settings"></i></span>
+                                            Settings
+                                        </a>
+                                        <a class="dropdown-item logout" href="signin.html">
+                                            <span><i class="fi fi-bs-sign-out-alt"></i></span>
+                                            Logout
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="brand-logo"><a class="full-logo" href="index.html"><img src="images/logoi.png" alt="" width="30"></a>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li>
+                        <a href="index.html">
+                            <span>
+                                <i class="fi fi-rr-house-chimney"></i>
+                            </span>
+                            <span class="nav-text">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="wallets.html">
+                            <span>
+                                <i class="fi fi-rr-wallet"></i>
+                            </span>
+                            <span class="nav-text">Wallets</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings-profile.html">
+                            <span>
+                                <i class="fi fi-rr-user"></i>
+                            </span>
+                            <span class="nav-text">Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="support.html">
+                            <span>
+                                <i class="fi fi-rr-user-headset"></i>
+                            </span>
+                            <span class="nav-text">Support</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="affiliates.html">
+                            <span>
+                                <i class="fi fi-rs-link-alt"></i>
+                            </span>
+                            <span class="nav-text">Affiliates</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <span>
+                                <i class="fi fi-rs-settings"></i>
+                            </span>
+                            <span class="nav-text">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="content-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title">
+                            <div class="row align-items-center justify-content-between">
+                                <div class="col-xl-4">
+                                    <div class="page-title-content">
+                                        <h3>Dashboard</h3>
+                                        <p class="mb-2">Welcome to Bitveste, <span id="fullNameDisplay">...</span>!</p>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="breadcrumbs"><a href="#">Home </a>
+                                        <span><i class="fi fi-rr-angle-small-right"></i></span>
+                                        <a href="#">Dashboard</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                        <div class="stat-widget-1">
+                            <h6>Total Capital Contributed</h6>
+                            <h3 id="totalInvestedCapitalDisplay">...</h3>
+                            <p>
+                                <span class="text-danger"></i>▲</span>
+                                Period-over-period change
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                        <div class="stat-widget-1">
+                            <h6>Capital Currently in Use</h6>
+                            <h3 id="activeCapitalDisplay">...</h3>
+                            <p>
+                                <span class="text-danger"></i>▲</span>
+                                Period-over-period change
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                        <div class="stat-widget-1">
+                            <h6>Available Funds</h6>
+
+                            <div class="balance-row">
+                                <h3 class="availableBalanceDisplay" id="availableBalanceDisplay">...</h3>
+                                <a href="#" class="withdraw-btn">Withdraw</a>
+                            </div>
+
+                            <p>
+                                <span class="text-success">▲</span>
+                                Period-over-period change
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                        <div class="stat-widget-1">
+                            <h6>Net Earnings to Date</h6>
+                            <h3 id="totalProfitEarnedDisplay">...</h3>
+                            <p>
+                                <span class="text-danger"></i>▲</span>
+                                Period-over-period change
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xxl-8 col-xl-8 col-lg-6">
+                    <div class="card">
+                    <div class="card-header balance-trend">
+                        <h4 class="card-title">
+                        Market Overview — Global Electronics
+                        <br>
+                        <span>$1,250B</span>
+                        </h4>
+                        <div class="trend-stats">
+                        <p class="mb-0">Last Quarter</p>
+                        <span class="text-success">
+                            <i class="fi fi-rr-arrow-trend-up"></i>
+                            2.5%
+                        </span>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <canvas id="profileWallet"></canvas>
+                        <p class="small text-muted mt-2">
+                        Independent industry data · Updated quarterly. This chart provides market context and does not represent platform performance.
+                        </p>
+                    </div>
+                    </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h4 class="card-title mb-0">Investment Offers</h4>
+                                    <span class="info-tooltip" tabindex="0" aria-label="Potential net earnings are estimates based on historical inventory performance and standard operating assumptions. Actual results may vary, and losses are possible;">
+                                        <i class="fi fi-rr-info"></i>
+                                        <span class="tooltip-text"><em>Potential net earnings are estimates based on historical inventory performance and standard operating assumptions. Actual results may vary, and losses are possible.</em></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="invoice-content">
+
+                                <ul id="dynamicOffersList"></ul>
+                                <button id="loadMoreOffersBtn" style="position:fixed;bottom:30px;right:30px;z-index:9999;display:none;background:#2F2CD8;color:#fff;border:none;border-radius:50px;padding:14px 28px;font-size:16px;box-shadow:0 4px 12px rgba(47,44,216,0.15);cursor:pointer;">Load More</button>
+                                <script>
+                                (function() {
+                                    // Helper to shuffle array
+                                    function shuffle(array) {
+                                        for (let i = array.length - 1; i > 0; i--) {
+                                            const j = Math.floor(Math.random() * (i + 1));
+                                            [array[i], array[j]] = [array[j], array[i]];
+                                        }
+                                        return array;
+                                    }
+
+                                    // Render a single offer card
+                                    function renderOfferCard(offer) {
+                                        return `
+                                        <li class="d-flex justify-content-between active flex-column align-items-start p-3 border mb-3 offer-card">
+                                            <div class="w-100 d-flex justify-content-between align-items-center mb-2">
+                                                <div>
+                                                    <h5 class="mb-1">${offer.title || 'Untitled Offer'}</h5>
+                                                    <span class="badge bg-primary">${offer.id ? 'ID-' + offer.id : ''}</span>
+                                                </div>
+                                                <div class="text-end">
+                                                    <span class="badge bg-success">${offer.status || 'Open'}</span>
+                                                </div>
+                                            </div>
+                                            <div class="w-100 mb-2">
+                                                <strong>Minimum Contribution:</strong> ${offer.minContribution || '-'}<br>
+                                                <strong>Potential Net Earnings:</strong> ${offer.potentialEarnings || '-'}<br>
+                                                <strong>Estimated Return:</strong> ${offer.estimatedReturn || '-'}
+                                            </div>
+                                            <div class="w-100 mb-2">
+                                                <strong>Use of Funds:</strong> ${offer.useOfFunds || '-'}
+                                            </div>
+                                            <div class="w-100 mb-2">
+                                                <strong>Return Model:</strong> ${offer.returnModel || '-'}<br>
+                                                <strong>Profit Distribution:</strong> ${offer.profitDistribution || '-'}
+                                            </div>
+                                            <div class="w-100 mb-2">
+                                                <strong>Settlement Period:</strong> ${offer.settlementPeriod || '-'}
+                                            </div>
+                                            <div class="w-100 mb-2">
+                                                <strong>Risk Disclosure:</strong> ${offer.riskDisclosure || '-'}
+                                            </div>
+                                            <div class="w-100 mb-2 text-center">
+                                                <a href="#" class="text-warning">-Discuss Offer-</a>
+                                            </div>
+                                            <div class="w-100 mb-2">
+                                                <a href="#" class="btn btn-outline-success btn-sm">Invest Now</a>
+                                            </div>
+                                        </li>
+                                        `;
+                                    }
+
+                                    // Main logic
+                                    const offersListEl = document.getElementById('dynamicOffersList');
+                                    const loadMoreBtn = document.getElementById('loadMoreOffersBtn');
+                                    let offers = [];
+                                    let currentIndex = 0;
+                                    const PAGE_SIZE = 10;
+
+                                    function loadOffersFromLocalStorage() {
+                                        let offersData = [];
+                                        try {
+                                            const raw = localStorage.getItem('investmentOffers');
+                                            if (raw) {
+                                                offersData = JSON.parse(raw);
+                                                if (!Array.isArray(offersData)) offersData = [];
+                                            }
+                                        } catch (e) {
+                                            offersData = [];
+                                        }
+                                        return offersData;
+                                    }
+
+                                    function renderNextOffers() {
+                                        const next = offers.slice(currentIndex, currentIndex + PAGE_SIZE);
+                                        next.forEach(offer => {
+                                            offersListEl.insertAdjacentHTML('beforeend', renderOfferCard(offer));
+                                        });
+                                        currentIndex += PAGE_SIZE;
+                                        if (currentIndex >= offers.length) {
+                                            loadMoreBtn.style.display = 'none';
+                                        } else {
+                                            loadMoreBtn.style.display = 'block';
+                                        }
+                                    }
+
+                                    function initOffers() {
+                                        offersListEl.innerHTML = '';
+                                        offers = loadOffersFromLocalStorage();
+                                        if (!offers.length) {
+                                            offersListEl.innerHTML = '<li class="text-center text-muted py-4">No investment offers found.</li>';
+                                            loadMoreBtn.style.display = 'none';
+                                            return;
+                                        }
+                                        offers = shuffle(offers);
+                                        currentIndex = 0;
+                                        renderNextOffers();
+                                    }
+
+                                    loadMoreBtn.addEventListener('click', renderNextOffers);
+
+                                    // Run on DOMContentLoaded and when user data is synced
+                                    document.addEventListener('DOMContentLoaded', initOffers);
+                                    document.addEventListener('userDataSynced', initOffers);
+
+                                    // Optionally, trigger a custom event in your dashboard.js after offers are updated:
+                                    // document.dispatchEvent(new Event('userDataSynced'));
+                                })();
+                                </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Active Investments</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="budget-content">
+                                    <ul>
+                                        <li>
+                                            <div class="budget-info flex-grow-2 me-3">
+                                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                                    <h5 class="mb-1"><i class="bg-green-500 fi fi-rr-carrot"></i>Projected Earnings</h5>
+                                                    <p class="mb-0"><strong>75 </strong>/ 100</p>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-green-500" role="progressbar" style="width: 75%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="budget-info flex-grow-2 me-3">
+                                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                                    <h5 class="mb-1"><i class="bg-cyan-500 fi fi-rr-bus"></i>Realized Profit
+                                                    </h5>
+                                                    <p class="mb-0"><strong>25 </strong>/ 100</p>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-cyan-500" role="progressbar" style="width: 25%;"></div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="budget-info flex-grow-2 me-3">
+                                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                                    <h5 class="mb-1"><i class="bg-sky-500 fi fi-sr-cat"></i>Pending Profit</h5>
+                                                    <p class="mb-0"><strong>50 </strong>/ 100</p>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-sky-500" role="progressbar" style="width: 50%;"></div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="budget-info flex-grow-2 me-3">
+                                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                                    <h5 class="mb-1"><i class="bg-indigo-500 fi fi-rr-graduation-cap"></i>Average ROI</h5>
+                                                    <p class="mb-0"><strong>45 </strong>/ 100</p>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-indigo-500" role="progressbar" style="width: 45%;"></div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="budget-info flex-grow-2 me-3">
+                                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                                    <h5 class="mb-1"><i class="bg-violet-500 fi fi-rr-shirt-long-sleeve"></i>Net Earnings Summary
+                                                    </h5>
+                                                    <p class="mb-0"><strong>35 </strong>/ 100</p>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-violet-500" role="progressbar" style="width: 35%;"></div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Transaction History</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="transaction-table">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0 table-responsive-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Category</th>
+                                                    <th>Date</th>
+                                                    <th>Description</th>
+                                                    <th>Amount</th>
+                                                    <th>Currency</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <span class="table-category-icon"><i class="bg-emerald-500 fi fi-rr-barber-shop"></i>
+                                                            Beauty</span>
+                                                    </td>
+                                                    <td>
+                                                        12.12.2023
+                                                    </td>
+                                                    <td>
+                                                        Grocery Items and Beverage soft drinks
+                                                    </td>
+                                                    <td>
+                                                        -32.20
+                                                    </td>
+                                                    <td>USD</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="table-category-icon"><i class="bg-teal-500 fi fi-rr-receipt"></i> Bills &
+                                                            Fees</span>
+                                                    </td>
+                                                    <td>
+                                                        12.12.2023
+                                                    </td>
+                                                    <td>
+                                                        Grocery Items and Beverage soft drinks
+                                                    </td>
+                                                    <td>
+                                                        -32.20
+                                                    </td>
+                                                    <td>USD</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="table-category-icon"><i class="bg-cyan-500 fi fi-rr-car-side"></i> Car</span>
+                                                    </td>
+                                                    <td>
+                                                        12.12.2023
+                                                    </td>
+                                                    <td>
+                                                        Grocery Items and Beverage soft drinks
+                                                    </td>
+                                                    <td>
+                                                        -32.20
+                                                    </td>
+                                                    <td>USD</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="table-category-icon"><i class="bg-sky-500 fi fi-rr-graduation-cap"></i>
+                                                            Education</span>
+                                                    </td>
+                                                    <td>
+                                                        12.12.2023
+                                                    </td>
+                                                    <td>
+                                                        Grocery Items and Beverage soft drinks
+                                                    </td>
+                                                    <td>
+                                                        -32.20
+                                                    </td>
+                                                    <td>USD</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="table-category-icon"><i class="bg-blue-500 fi fi-rr-clapperboard-play"></i>
+                                                            Entertainment</span>
+                                                    </td>
+                                                    <td>
+                                                        12.12.2023
+                                                    </td>
+                                                    <td>
+                                                        Grocery Items and Beverage soft drinks
+                                                    </td>
+                                                    <td>
+                                                        -32.20
+                                                    </td>
+                                                    <td>USD</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="message" class="messagesBox"></div>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/chartjs/chartjs.js"></script>
+    <script src="js/plugins/chartjs-profile-wallet.js"></script>
+    <script src="js/plugins/chartjs-profile-wallet2.js"></script>
+    <script src="js/plugins/chartjs-profile-wallet3.js"></script>
+    <script src="js/plugins/chartjs-profile-wallet4.js"></script>
+    <!--  -->
+    <!--  -->
+    <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="js/plugins/perfect-scrollbar-init.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

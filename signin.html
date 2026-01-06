@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bitveste – Investor Login or Sign Up | Real Store Capital & Profit Sharing Platform</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="vendor/toastr/toastr.min.css">
+</head>
+
+<body class="dashboard">
+    <div id="preloader" class="preloader-wrapper">
+        <div class="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <div class="authincation">
+        <div class="container">
+            <div class="row justify-content-center align-items-center g-0">
+                <div class="col-xl-8">
+                    <div class="row g-0">
+                        <div class="col-lg-6">
+                            <div class="welcome-content">
+                                <div class="welcome-title">
+                                    <div class="mini-logo">
+                                        <a href="index.html">
+                                            <img src="images/logo-white.png" alt="" width="40" /></a>
+                                    </div>
+                                    <h3>Welcome to Bitveste</h3>
+                                </div>
+                                <div class="privacy-social">
+                                    <div class="privacy-link"><a href="#">Have an issue with 2-factor
+                                            authentication?</a><br /><a href="#">Privacy Policy</a>
+                                    </div>
+                                    <div class="intro-social">
+                                        <ul>
+                                            <li><a href="#"><i class="fi fi-brands-facebook"></i></a></li>
+                                            <li><a href="#"><i class="fi fi-brands-twitter-alt"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="auth-form text-center">
+                                <h4>Login or Sign Up</h4>
+                                <div class="privacy-link mb-3"><a>Enter your email address below and we'll send you a magic link for a password-free sign in experience.</a>
+                                </div>
+                                    <div class="row">
+                                        <div class="col-12 mb-3">
+                                            <input name="email" id="email" type="email" placeholder="Enter your email address" required class="form-control" />
+                                        </div>
+                                            <div class="form-check">
+                                                <input id="terms" type="checkbox" class="form-check-input" />
+                                                <label class="form-check-label" for="terms">I agree to Bitveste's <a href="#" class="text-primary">Terms of Service</a></label>
+                                            </div>
+                                    </div>
+                                    <div class="mt-3 d-grid gap-2"><button id="magicLinkBtn" onclick="sendMagicLink()" class="btn btn-primary me-8 text-white">Send Magic Link</button></div>
+                                <p class="mt-3 mb-0 undefined">If you don't see the email in your inbox, please check your spam folder.</p>
+                                <div id="message" class="messagesBox"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+    const emailInput = document.getElementById("email");
+    const magicLinkBtn = document.getElementById("magicLinkBtn");
+    const termsCheckbox = document.getElementById("terms");
+
+    function updateButtonState() {
+      magicLinkBtn.disabled = !emailInput.value || !termsCheckbox.checked;
+    }
+
+    emailInput.addEventListener("input", updateButtonState);
+    termsCheckbox.addEventListener("change", updateButtonState);
+
+    function showMessage(message, isError = false) {
+      const messageBox = document.getElementById("message");
+      const icon = isError ? '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>' : '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>';
+      messageBox.innerHTML = `${icon} ${message}`;
+      messageBox.className = isError ? 'error' : 'success';
+      messageBox.classList.add('show');
+      
+      setTimeout(() => {
+        messageBox.classList.remove('show');
+      }, 5000);
+    }
+
+    async function sendMagicLink() {
+      const email = document.getElementById("email").value;
+
+      if (!email) {
+        showMessage("Please enter your email address.", true);
+        return;
+      }
+
+      if (!termsCheckbox.checked) {
+        showMessage("Please accept the terms and conditions.", true);
+        return;
+      }
+
+      try {
+        magicLinkBtn.disabled = true;
+        magicLinkBtn.innerHTML = 'Sending...';
+        showMessage("Sending magic link...");
+        
+        const res = await fetch("https://api.bitveste.com/api/auth/request", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
+        });
+
+        const text = await res.text();
+        showMessage(text);
+      } catch (err) {
+        showMessage("Failed to send link. Please try again.", true);
+      } finally {
+        magicLinkBtn.disabled = false;
+        magicLinkBtn.innerHTML = 'Send Magic Link';
+        updateButtonState();
+      }
+    }
+  </script>
+    <!--  -->
+    <script src="js/scripts.js"></script>
+</body>
+</html>

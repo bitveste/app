@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+
+<!--
+ // Name: ekash
+ // Description: Personal Finance Management Admin Dashboard App Template
+ // Version: 1.0.0
+ // Email : pixcelsthemes@gmail.com
+ // Author: Pixcels Themes
+ // URL: https://pixcelsthemes.com
+ // Themeforest Profile : https://themeforest.net/user/pixcelsthemes
+ // License: ISC
+-->
+
+<html lang="en">
+
+
+<!-- Mirrored from ekash.pixcelsthemes.com/livepreview/ekash/settings-categories.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Dec 2025 16:08:53 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ekash : Personal Finance Management Admin Dashboard HTML Template</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="vendor/toastr/toastr.min.css">
+</head>
+
+<body class="dashboard">
+    <div id="preloader" class="preloader-wrapper">
+        <div class="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <div id="main-wrapper">
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xxl-12">
+                        <div class="header-content">
+                            <div class="header-left">
+                                <div class="brand-logo"><a class="mini-logo" href="index.html"><img src="images/logoi.png" alt="" width="40"></a></div>
+                                <div class="search">
+                                    <form action="#">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Search Here">
+                                            <span class="input-group-text"><i class="fi fi-br-search"></i></span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="header-right">
+                                <div class="dark-light-toggle" onclick="themeToggle()">
+                                    <span class="dark"><i class="fi fi-rr-eclipse-alt"></i></span>
+                                    <span class="light"><i class="fi fi-rr-eclipse-alt"></i></span>
+                                </div>
+                                <div class="nav-item dropdown notification">
+                                    <div data-bs-toggle="dropdown">
+                                        <div class="notify-bell icon-menu">
+                                            <span><i class="fi fi-rs-bells"></i></span>
+                                        </div>
+                                    </div>
+                                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-end">
+                                        <h4>Recent Notification</h4>
+                                        <div class="lists">
+                                            <a class="" href="#">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="me-3 icon success"><i class="fi fi-bs-check"></i></span>
+                                                    <div>
+                                                        <p>Account created successfully</p>
+                                                        <span>2024-11-04 12:00:23</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a class="" href="#">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="me-3 icon fail"><i class="fi fi-sr-cross-small"></i></span>
+                                                    <div>
+                                                        <p>2FA verification failed</p>
+                                                        <span>2024-11-04 12:00:23</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a class="" href="#">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="me-3 icon success"><i class="fi fi-bs-check"></i></span>
+                                                    <div>
+                                                        <p>Device confirmation completed</p>
+                                                        <span>2024-11-04 12:00:23</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a class="" href="#">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="me-3 icon pending"><i class="fi fi-rr-triangle-warning"></i></span>
+                                                    <div>
+                                                        <p>Phone verification pending</p>
+                                                        <span>2024-11-04 12:00:23</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="more">
+                                            <a href="notifications.html">More<i class="fi fi-bs-angle-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown profile_log dropdown">
+                                    <div data-bs-toggle="dropdown">
+                                        <div class="user icon-menu active"><span><i class="fi fi-rr-user"></i></span></div>
+                                    </div>
+                                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu dropdown-menu-end">
+                                        <div class="user-email">
+                                            <div class="user">
+                                                <span class="thumb"><img class="rounded-full" src="images/avatar/3.jpg" alt=""></span>
+                                                <div class="user-info">
+                                                    <h5>Hafsa Humaira</h5>
+                                                    <span>hello@email.com</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a class="dropdown-item" href="profile.html">
+                                            <span><i class="fi fi-rr-user"></i></span>
+                                            Profile
+                                        </a>
+                                        <a class="dropdown-item" href="wallets.html">
+                                            <span><i class="fi fi-rr-wallet"></i></span>
+                                            Wallets
+                                        </a>
+                                        <a class="dropdown-item" href="settings.html">
+                                            <span><i class="fi fi-rr-settings"></i></span>
+                                            Settings
+                                        </a>
+                                        <a class="dropdown-item logout" href="signin.html">
+                                            <span><i class="fi fi-bs-sign-out-alt"></i></span>
+                                            Logout
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="brand-logo"><a class="full-logo" href="index.html"><img src="images/logoi.png" alt="" width="30"></a>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li>
+                        <a href="index.html">
+                            <span>
+                                <i class="fi fi-rr-dashboard"></i>
+                            </span>
+                            <span class="nav-text">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="wallets.html">
+                            <span>
+                                <i class="fi fi-rr-wallet"></i>
+                            </span>
+                            <span class="nav-text">Wallets</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="budgets.html">
+                            <span>
+                                <i class="fi fi-rr-donate"></i>
+                            </span>
+                            <span class="nav-text">Budgets</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="goals.html">
+                            <span>
+                                <i class="fi fi-sr-bullseye-arrow"></i>
+                            </span>
+                            <span class="nav-text">Goals</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile.html">
+                            <span>
+                                <i class="fi fi-rr-user"></i>
+                            </span>
+                            <span class="nav-text">Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="analytics.html">
+                            <span>
+                                <i class="fi fi-rr-chart-histogram"></i>
+                            </span>
+                            <span class="nav-text">Analytics</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="support.html">
+                            <span>
+                                <i class="fi fi-rr-user-headset"></i>
+                            </span>
+                            <span class="nav-text">Support</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="affiliates.html">
+                            <span>
+                                <i class="fi fi-rs-link-alt"></i>
+                            </span>
+                            <span class="nav-text">Affiliates</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <span>
+                                <i class="fi fi-rs-settings"></i>
+                            </span>
+                            <span class="nav-text">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="content-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title">
+                            <div class="row align-items-center justify-content-between">
+                                <div class="col-xl-4">
+                                    <div class="page-title-content">
+                                        <h3>Categories</h3>
+                                        <p class="mb-2">Welcome Ekash Finance Management</p>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="breadcrumbs"><a href="#">Home </a>
+                                        <span><i class="fi fi-rr-angle-small-right"></i></span>
+                                        <a href="#">Categories</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xxl-12 col-xl-12">
+                        <div class="settings-menu">
+                            <a href="settings.html">Account</a>
+                            <a href="settings-general.html">General</a>
+                            <a href="settings-profile.html">Profile</a>
+                            <a href="settings-bank.html">Add Bank</a>
+                            <a href="settings-security.html">Security</a>
+                            <a href="settings-session.html">Session</a>
+                            <a href="settings-categories.html">Categories</a>
+                            <a href="settings-currencies.html">Currencies</a>
+                            <a href="settings-api.html">Api</a>
+                            <a href="support.html">Support</a>
+                        </div>
+                        <div class="row">
+                            <div class="col-xxl-4 col-xl-4 col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Create a new categories</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="create-new-category">
+                                            <form class="row">
+                                                <div class="mb-3 col-12">
+                                                    <label class="form-label">Name </label>
+                                                    <input type="text" class="form-control" placeholder="category name">
+                                                </div>
+                                                <div class="mb-3 col-12">
+                                                    <label class="form-label">Type </label>
+                                                    <select class="form-select">
+                                                        <option selected>Choose...</option>
+                                                        <option>Income</option>
+                                                        <option>Expenses</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 col-6">
+                                                    <label class="form-label">Icon </label>
+                                                    <select class="form-select">
+                                                        <option selected>Choose...</option>
+                                                        <option>...</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 col-6">
+                                                    <label class="form-label">Color </label>
+                                                    <select class="form-select">
+                                                        <option selected>Choose...</option>
+                                                        <option>...</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-12">
+                                                    <button class="btn btn-success w-100">Create new category</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-8 col-xl-8 col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Income Categories</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="category-type">
+                                            <ul>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-purple-500 fi fi-rr-usd-circle"></i> Salary</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-red-500 fi fi-rr-store-alt"></i> Business</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-orange-500 fi fi-rr-life-ring"></i> Client</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-amber-500 fi fi-rr-gift"></i> Gifts</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-yellow-500 fi fi-bs-user-shield"></i> Insurance
+                                                        </span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-lime-500 fi fi-rr-sack-dollar"></i> Loan</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-green-500 fi fi-rr-add-document"></i> Other</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Expense Categories</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="category-type">
+                                            <ul>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-emerald-500 fi fi-rr-barber-shop"></i>
+                                                            Beauty</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-teal-500 fi fi-rr-receipt"></i> Bills &
+                                                            Fees</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-cyan-500 fi fi-rr-car-side"></i> Car</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-sky-500 fi fi-rr-graduation-cap"></i>
+                                                            Education</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-blue-500 fi fi-rr-clapperboard-play"></i>
+                                                            Entertainment</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-indigo-500 fi fi-sr-family"></i> Family</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-violet-500 fi fi-rr-hamburger-soda"></i> Food &
+                                                            Drink</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-purple-500 fi fi-rr-money-bills-simple"></i>
+                                                            Salary</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-fuchsia-500 fi fi-rs-pineapple"></i>
+                                                            Groceries</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-pink-500 fi fi-rr-user-md"></i> Healthcare</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-purple-500 fi fi-rr-home"></i> Home</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-rose-500 fi fi-rs-shopping-bag"></i>
+                                                            Shopping</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-orange-500 fi fi-br-running"></i> Sports </span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-emerald-500 fi fi-rr-bowling"></i> Hobbies</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-teal-500 fi fi-rr-plane"></i> Travel</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-cyan-500 fi fi-rr-bus"></i>
+                                                            Transport</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="left-category">
+                                                        <span class="drag-icon"><i class="fi fi-ss-grip-lines"></i></span>
+                                                        <span class="category-icon"><i class="bg-indigo-500 fi fi-rr-briefcase"></i> Work</span>
+                                                    </div>
+                                                    <div class="right-category">
+                                                        <span><i class="fi fi-rs-pencil"></i></span>
+                                                        <span><i class="fi fi-rr-eye"></i></span>
+                                                        <span><i class="fi fi-rr-trash"></i></span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="copyright">
+                            <p>© Copyright
+                                <script>
+                                    var CurrentYear = new Date().getFullYear()
+                                    document.write(CurrentYear)
+                                </script>
+                                <a href="#">Ekash</a> I All Rights Reserved
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="footer-social">
+                            <ul>
+                                <li><a href="#"><i class="fi fi-brands-facebook"></i></a></li>
+                                <li><a href="#"><i class="fi fi-brands-twitter"></i></a></li>
+                                <li><a href="#"><i class="fi fi-brands-linkedin"></i></a></li>
+                                <li><a href="#"><i class="fi fi-brands-youtube"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!--  -->
+    <!--  -->
+    <script src="js/scripts.js"></script>
+</body>
+
+
+<!-- Mirrored from ekash.pixcelsthemes.com/livepreview/ekash/settings-categories.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Dec 2025 16:08:53 GMT -->
+</html>

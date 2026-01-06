@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+
+<!--
+ // Name: ekash
+ // Description: Personal Finance Management Admin Dashboard App Template
+ // Version: 1.0.0
+ // Email : pixcelsthemes@gmail.com
+ // Author: Pixcels Themes
+ // URL: https://pixcelsthemes.com
+ // Themeforest Profile : https://themeforest.net/user/pixcelsthemes
+ // License: ISC
+-->
+
+<html lang="en">
+
+
+<!-- Mirrored from ekash.pixcelsthemes.com/livepreview/ekash/settings-general.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Dec 2025 16:08:52 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ekash : Personal Finance Management Admin Dashboard HTML Template</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="vendor/toastr/toastr.min.css">
+</head>
+
+<body class="dashboard">
+    <div id="preloader" class="preloader-wrapper">
+        <div class="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <div id="main-wrapper">
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xxl-12">
+                        <div class="header-content">
+                            <div class="header-left">
+                                <div class="brand-logo"><a class="mini-logo" href="index.html"><img src="images/logoi.png" alt="" width="40"></a></div>
+                                <div class="search">
+                                    <form action="#">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Search Here">
+                                            <span class="input-group-text"><i class="fi fi-br-search"></i></span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="header-right">
+                                <div class="dark-light-toggle" onclick="themeToggle()">
+                                    <span class="dark"><i class="fi fi-rr-eclipse-alt"></i></span>
+                                    <span class="light"><i class="fi fi-rr-eclipse-alt"></i></span>
+                                </div>
+                                <div class="nav-item dropdown notification">
+                                    <div data-bs-toggle="dropdown">
+                                        <div class="notify-bell icon-menu">
+                                            <span><i class="fi fi-rs-bells"></i></span>
+                                        </div>
+                                    </div>
+                                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-end">
+                                        <h4>Recent Notification</h4>
+                                        <div class="lists">
+                                            <a class="" href="#">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="me-3 icon success"><i class="fi fi-bs-check"></i></span>
+                                                    <div>
+                                                        <p>Account created successfully</p>
+                                                        <span>2024-11-04 12:00:23</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a class="" href="#">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="me-3 icon fail"><i class="fi fi-sr-cross-small"></i></span>
+                                                    <div>
+                                                        <p>2FA verification failed</p>
+                                                        <span>2024-11-04 12:00:23</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a class="" href="#">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="me-3 icon success"><i class="fi fi-bs-check"></i></span>
+                                                    <div>
+                                                        <p>Device confirmation completed</p>
+                                                        <span>2024-11-04 12:00:23</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a class="" href="#">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="me-3 icon pending"><i class="fi fi-rr-triangle-warning"></i></span>
+                                                    <div>
+                                                        <p>Phone verification pending</p>
+                                                        <span>2024-11-04 12:00:23</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="more">
+                                            <a href="notifications.html">More<i class="fi fi-bs-angle-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown profile_log dropdown">
+                                    <div data-bs-toggle="dropdown">
+                                        <div class="user icon-menu active"><span><i class="fi fi-rr-user"></i></span></div>
+                                    </div>
+                                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu dropdown-menu-end">
+                                        <div class="user-email">
+                                            <div class="user">
+                                                <span class="thumb"><img class="rounded-full" src="images/avatar/3.jpg" alt=""></span>
+                                                <div class="user-info">
+                                                    <h5>Hafsa Humaira</h5>
+                                                    <span>hello@email.com</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a class="dropdown-item" href="profile.html">
+                                            <span><i class="fi fi-rr-user"></i></span>
+                                            Profile
+                                        </a>
+                                        <a class="dropdown-item" href="wallets.html">
+                                            <span><i class="fi fi-rr-wallet"></i></span>
+                                            Wallets
+                                        </a>
+                                        <a class="dropdown-item" href="settings.html">
+                                            <span><i class="fi fi-rr-settings"></i></span>
+                                            Settings
+                                        </a>
+                                        <a class="dropdown-item logout" href="signin.html">
+                                            <span><i class="fi fi-bs-sign-out-alt"></i></span>
+                                            Logout
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="brand-logo"><a class="full-logo" href="index.html"><img src="images/logoi.png" alt="" width="30"></a>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li>
+                        <a href="index.html">
+                            <span>
+                                <i class="fi fi-rr-dashboard"></i>
+                            </span>
+                            <span class="nav-text">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="wallets.html">
+                            <span>
+                                <i class="fi fi-rr-wallet"></i>
+                            </span>
+                            <span class="nav-text">Wallets</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="budgets.html">
+                            <span>
+                                <i class="fi fi-rr-donate"></i>
+                            </span>
+                            <span class="nav-text">Budgets</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="goals.html">
+                            <span>
+                                <i class="fi fi-sr-bullseye-arrow"></i>
+                            </span>
+                            <span class="nav-text">Goals</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile.html">
+                            <span>
+                                <i class="fi fi-rr-user"></i>
+                            </span>
+                            <span class="nav-text">Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="analytics.html">
+                            <span>
+                                <i class="fi fi-rr-chart-histogram"></i>
+                            </span>
+                            <span class="nav-text">Analytics</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="support.html">
+                            <span>
+                                <i class="fi fi-rr-user-headset"></i>
+                            </span>
+                            <span class="nav-text">Support</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="affiliates.html">
+                            <span>
+                                <i class="fi fi-rs-link-alt"></i>
+                            </span>
+                            <span class="nav-text">Affiliates</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <span>
+                                <i class="fi fi-rs-settings"></i>
+                            </span>
+                            <span class="nav-text">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="content-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title">
+                            <div class="row align-items-center justify-content-between">
+                                <div class="col-xl-4">
+                                    <div class="page-title-content">
+                                        <h3>General</h3>
+                                        <p class="mb-2">Welcome Ekash Finance Management</p>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="breadcrumbs"><a href="#">Home </a>
+                                        <span><i class="fi fi-rr-angle-small-right"></i></span>
+                                        <a href="#">General</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xxl-12 col-xl-12">
+                        <div class="settings-menu">
+                            <a href="settings.html">Account</a>
+                            <a href="settings-general.html">General</a>
+                            <a href="settings-profile.html">Profile</a>
+                            <a href="settings-bank.html">Add Bank</a>
+                            <a href="settings-security.html">Security</a>
+                            <a href="settings-session.html">Session</a>
+                            <a href="settings-categories.html">Categories</a>
+                            <a href="settings-currencies.html">Currencies</a>
+                            <a href="settings-api.html">Api</a>
+                            <a href="support.html">Support</a>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Preferences</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form action="#">
+                                            <div class="row">
+                                                <div class="mb-3 col-6">
+                                                    <label class="form-label">Primary Currency</label>
+                                                    <select class="form-select">
+                                                        <option>USD</option>
+                                                        <option>CAD</option>
+                                                        <option>Euro</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 col-6">
+                                                    <label class="form-label">Time Zone</label>
+                                                    <select class="form-select">
+                                                        <option timeZoneId="1" gmtAdjustment="GMT-12:00" useDaylightTime="0" value="-12">(GMT-12:00) International
+                                                            Date Line West</option>
+                                                        <option timeZoneId="2" gmtAdjustment="GMT-11:00" useDaylightTime="0" value="-11">(GMT-11:00) Midway Island,
+                                                            Samoa</option>
+                                                        <option timeZoneId="3" gmtAdjustment="GMT-10:00" useDaylightTime="0" value="-10">(GMT-10:00) Hawaii
+                                                        </option>
+                                                        <option timeZoneId="4" gmtAdjustment="GMT-09:00" useDaylightTime="1" value="-9">(GMT-09:00) Alaska
+                                                        </option>
+                                                        <option timeZoneId="5" gmtAdjustment="GMT-08:00" useDaylightTime="1" value="-8">(GMT-08:00) Pacific Time (US
+                                                            & Canada)</option>
+                                                        <option timeZoneId="6" gmtAdjustment="GMT-08:00" useDaylightTime="1" value="-8">(GMT-08:00) Tijuana, Baja
+                                                            California</option>
+                                                        <option timeZoneId="7" gmtAdjustment="GMT-07:00" useDaylightTime="0" value="-7">(GMT-07:00) Arizona
+                                                        </option>
+                                                        <option timeZoneId="8" gmtAdjustment="GMT-07:00" useDaylightTime="1" value="-7">(GMT-07:00) Chihuahua, La
+                                                            Paz, Mazatlan</option>
+                                                        <option timeZoneId="9" gmtAdjustment="GMT-07:00" useDaylightTime="1" value="-7">(GMT-07:00) Mountain Time (US
+                                                            & Canada)</option>
+                                                        <option timeZoneId="10" gmtAdjustment="GMT-06:00" useDaylightTime="0" value="-6">(GMT-06:00) Central America
+                                                        </option>
+                                                        <option timeZoneId="11" gmtAdjustment="GMT-06:00" useDaylightTime="1" value="-6">(GMT-06:00) Central Time (US
+                                                            & Canada)</option>
+                                                        <option timeZoneId="12" gmtAdjustment="GMT-06:00" useDaylightTime="1" value="-6">(GMT-06:00) Guadalajara,
+                                                            Mexico City, Monterrey</option>
+                                                        <option timeZoneId="13" gmtAdjustment="GMT-06:00" useDaylightTime="0" value="-6">(GMT-06:00) Saskatchewan
+                                                        </option>
+                                                        <option timeZoneId="14" gmtAdjustment="GMT-05:00" useDaylightTime="0" value="-5">(GMT-05:00) Bogota, Lima,
+                                                            Quito, Rio Branco</option>
+                                                        <option timeZoneId="15" gmtAdjustment="GMT-05:00" useDaylightTime="1" value="-5">(GMT-05:00) Eastern Time (US
+                                                            & Canada)</option>
+                                                        <option timeZoneId="16" gmtAdjustment="GMT-05:00" useDaylightTime="1" value="-5">(GMT-05:00) Indiana (East)
+                                                        </option>
+                                                        <option timeZoneId="17" gmtAdjustment="GMT-04:00" useDaylightTime="1" value="-4">(GMT-04:00) Atlantic Time
+                                                            (Canada)
+                                                        </option>
+                                                        <option timeZoneId="18" gmtAdjustment="GMT-04:00" useDaylightTime="0" value="-4">(GMT-04:00) Caracas, La Paz
+                                                        </option>
+                                                        <option timeZoneId="19" gmtAdjustment="GMT-04:00" useDaylightTime="0" value="-4">(GMT-04:00) Manaus
+                                                        </option>
+                                                        <option timeZoneId="20" gmtAdjustment="GMT-04:00" useDaylightTime="1" value="-4">(GMT-04:00) Santiago
+                                                        </option>
+                                                        <option timeZoneId="21" gmtAdjustment="GMT-03:30" useDaylightTime="1" value="-3.5">(GMT-03:30) Newfoundland
+                                                        </option>
+                                                        <option timeZoneId="22" gmtAdjustment="GMT-03:00" useDaylightTime="1" value="-3">(GMT-03:00) Brasilia
+                                                        </option>
+                                                        <option timeZoneId="23" gmtAdjustment="GMT-03:00" useDaylightTime="0" value="-3">(GMT-03:00) Buenos Aires,
+                                                            Georgetown
+                                                        </option>
+                                                        <option timeZoneId="24" gmtAdjustment="GMT-03:00" useDaylightTime="1" value="-3">(GMT-03:00) Greenland
+                                                        </option>
+                                                        <option timeZoneId="25" gmtAdjustment="GMT-03:00" useDaylightTime="1" value="-3">(GMT-03:00) Montevideo
+                                                        </option>
+                                                        <option timeZoneId="26" gmtAdjustment="GMT-02:00" useDaylightTime="1" value="-2">(GMT-02:00) Mid-Atlantic
+                                                        </option>
+                                                        <option timeZoneId="27" gmtAdjustment="GMT-01:00" useDaylightTime="0" value="-1">(GMT-01:00) Cape Verde Is.
+                                                        </option>
+                                                        <option timeZoneId="28" gmtAdjustment="GMT-01:00" useDaylightTime="1" value="-1">(GMT-01:00) Azores
+                                                        </option>
+                                                        <option timeZoneId="29" gmtAdjustment="GMT+00:00" useDaylightTime="0" value="0">(GMT+00:00) Casablanca,
+                                                            Monrovia, Reykjavik</option>
+                                                        <option timeZoneId="30" gmtAdjustment="GMT+00:00" useDaylightTime="1" value="0">(GMT+00:00) Greenwich Mean
+                                                            Time : Dublin, Edinburgh, Lisbon, London</option>
+                                                        <option timeZoneId="31" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Amsterdam, Berlin,
+                                                            Bern, Rome, Stockholm, Vienna
+                                                        </option>
+                                                        <option timeZoneId="32" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Belgrade,
+                                                            Bratislava, Budapest, Ljubljana, Prague
+                                                        </option>
+                                                        <option timeZoneId="33" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Brussels,
+                                                            Copenhagen, Madrid, Paris</option>
+                                                        <option timeZoneId="34" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) Sarajevo, Skopje,
+                                                            Warsaw, Zagreb</option>
+                                                        <option timeZoneId="35" gmtAdjustment="GMT+01:00" useDaylightTime="1" value="1">(GMT+01:00) West Central
+                                                            Africa
+                                                        </option>
+                                                        <option timeZoneId="36" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Amman
+                                                        </option>
+                                                        <option timeZoneId="37" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Athens, Bucharest,
+                                                            Istanbul
+                                                        </option>
+                                                        <option timeZoneId="38" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Beirut
+                                                        </option>
+                                                        <option timeZoneId="39" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Cairo
+                                                        </option>
+                                                        <option timeZoneId="40" gmtAdjustment="GMT+02:00" useDaylightTime="0" value="2">(GMT+02:00) Harare, Pretoria
+                                                        </option>
+                                                        <option timeZoneId="41" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Helsinki, Kyiv,
+                                                            Riga, Sofia, Tallinn, Vilnius
+                                                        </option>
+                                                        <option timeZoneId="42" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Jerusalem
+                                                        </option>
+                                                        <option timeZoneId="43" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Minsk
+                                                        </option>
+                                                        <option timeZoneId="44" gmtAdjustment="GMT+02:00" useDaylightTime="1" value="2">(GMT+02:00) Windhoek
+                                                        </option>
+                                                        <option timeZoneId="45" gmtAdjustment="GMT+03:00" useDaylightTime="0" value="3">(GMT+03:00) Kuwait, Riyadh,
+                                                            Baghdad
+                                                        </option>
+                                                        <option timeZoneId="46" gmtAdjustment="GMT+03:00" useDaylightTime="1" value="3">(GMT+03:00) Moscow, St.
+                                                            Petersburg, Volgograd</option>
+                                                        <option timeZoneId="47" gmtAdjustment="GMT+03:00" useDaylightTime="0" value="3">(GMT+03:00) Nairobi
+                                                        </option>
+                                                        <option timeZoneId="48" gmtAdjustment="GMT+03:00" useDaylightTime="0" value="3">(GMT+03:00) Tbilisi
+                                                        </option>
+                                                        <option timeZoneId="49" gmtAdjustment="GMT+03:30" useDaylightTime="1" value="3.5">(GMT+03:30) Tehran
+                                                        </option>
+                                                        <option timeZoneId="50" gmtAdjustment="GMT+04:00" useDaylightTime="0" value="4">(GMT+04:00) Abu Dhabi, Muscat
+                                                        </option>
+                                                        <option timeZoneId="51" gmtAdjustment="GMT+04:00" useDaylightTime="1" value="4">(GMT+04:00) Baku
+                                                        </option>
+                                                        <option timeZoneId="52" gmtAdjustment="GMT+04:00" useDaylightTime="1" value="4">(GMT+04:00) Yerevan
+                                                        </option>
+                                                        <option timeZoneId="53" gmtAdjustment="GMT+04:30" useDaylightTime="0" value="4.5">(GMT+04:30) Kabul
+                                                        </option>
+                                                        <option timeZoneId="54" gmtAdjustment="GMT+05:00" useDaylightTime="1" value="5">(GMT+05:00) Yekaterinburg
+                                                        </option>
+                                                        <option timeZoneId="55" gmtAdjustment="GMT+05:00" useDaylightTime="0" value="5">(GMT+05:00) Islamabad,
+                                                            Karachi, Tashkent</option>
+                                                        <option timeZoneId="56" gmtAdjustment="GMT+05:30" useDaylightTime="0" value="5.5">(GMT+05:30) Sri
+                                                            Jayawardenapura
+                                                        </option>
+                                                        <option timeZoneId="57" gmtAdjustment="GMT+05:30" useDaylightTime="0" value="5.5">(GMT+05:30) Chennai,
+                                                            Kolkata, Mumbai, New Delhi</option>
+                                                        <option timeZoneId="58" gmtAdjustment="GMT+05:45" useDaylightTime="0" value="5.75">(GMT+05:45) Kathmandu
+                                                        </option>
+                                                        <option timeZoneId="59" gmtAdjustment="GMT+06:00" useDaylightTime="1" value="6">(GMT+06:00) Almaty,
+                                                            Novosibirsk
+                                                        </option>
+                                                        <option timeZoneId="60" gmtAdjustment="GMT+06:00" useDaylightTime="0" value="6">(GMT+06:00) Astana, Dhaka
+                                                        </option>
+                                                        <option timeZoneId="61" gmtAdjustment="GMT+06:30" useDaylightTime="0" value="6.5">(GMT+06:30) Yangon (Rangoon)
+                                                        </option>
+                                                        <option timeZoneId="62" gmtAdjustment="GMT+07:00" useDaylightTime="0" value="7">(GMT+07:00) Bangkok, Hanoi,
+                                                            Jakarta
+                                                        </option>
+                                                        <option timeZoneId="63" gmtAdjustment="GMT+07:00" useDaylightTime="1" value="7">(GMT+07:00) Krasnoyarsk
+                                                        </option>
+                                                        <option timeZoneId="64" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Beijing,
+                                                            Chongqing, Hong Kong, Urumqi
+                                                        </option>
+                                                        <option timeZoneId="65" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Kuala Lumpur,
+                                                            Singapore
+                                                        </option>
+                                                        <option timeZoneId="66" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Irkutsk, Ulaan
+                                                            Bataar
+                                                        </option>
+                                                        <option timeZoneId="67" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Perth
+                                                        </option>
+                                                        <option timeZoneId="68" gmtAdjustment="GMT+08:00" useDaylightTime="0" value="8">(GMT+08:00) Taipei
+                                                        </option>
+                                                        <option timeZoneId="69" gmtAdjustment="GMT+09:00" useDaylightTime="0" value="9">(GMT+09:00) Osaka, Sapporo,
+                                                            Tokyo
+                                                        </option>
+                                                        <option timeZoneId="70" gmtAdjustment="GMT+09:00" useDaylightTime="0" value="9">(GMT+09:00) Seoul
+                                                        </option>
+                                                        <option timeZoneId="71" gmtAdjustment="GMT+09:00" useDaylightTime="1" value="9">(GMT+09:00) Yakutsk
+                                                        </option>
+                                                        <option timeZoneId="72" gmtAdjustment="GMT+09:30" useDaylightTime="0" value="9.5">(GMT+09:30) Adelaide
+                                                        </option>
+                                                        <option timeZoneId="73" gmtAdjustment="GMT+09:30" useDaylightTime="0" value="9.5">(GMT+09:30) Darwin
+                                                        </option>
+                                                        <option timeZoneId="74" gmtAdjustment="GMT+10:00" useDaylightTime="0" value="10">(GMT+10:00) Brisbane
+                                                        </option>
+                                                        <option timeZoneId="75" gmtAdjustment="GMT+10:00" useDaylightTime="1" value="10">(GMT+10:00) Canberra,
+                                                            Melbourne, Sydney</option>
+                                                        <option timeZoneId="76" gmtAdjustment="GMT+10:00" useDaylightTime="1" value="10">(GMT+10:00) Hobart
+                                                        </option>
+                                                        <option timeZoneId="77" gmtAdjustment="GMT+10:00" useDaylightTime="0" value="10">(GMT+10:00) Guam, Port
+                                                            Moresby
+                                                        </option>
+                                                        <option timeZoneId="78" gmtAdjustment="GMT+10:00" useDaylightTime="1" value="10">(GMT+10:00) Vladivostok
+                                                        </option>
+                                                        <option timeZoneId="79" gmtAdjustment="GMT+11:00" useDaylightTime="1" value="11">(GMT+11:00) Magadan, Solomon
+                                                            Is., New Caledonia</option>
+                                                        <option timeZoneId="80" gmtAdjustment="GMT+12:00" useDaylightTime="1" value="12">(GMT+12:00) Auckland,
+                                                            Wellington
+                                                        </option>
+                                                        <option timeZoneId="81" gmtAdjustment="GMT+12:00" useDaylightTime="0" value="12">(GMT+12:00) Fiji, Kamchatka,
+                                                            Marshall Is.</option>
+                                                        <option timeZoneId="82" gmtAdjustment="GMT+13:00" useDaylightTime="0" value="13">(GMT+13:00) Nuku'alofa
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <button class="btn btn-success pl-5 pr-5">Save</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Notifications</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form action="#">
+                                            <div class="row col-6">
+                                                <div class="mb-3 mb-0">
+                                                    <label class="toggle">
+                                                        <input class="toggle-checkbox" type="checkbox" checked>
+                                                        <div class="toggle-switch"></div>
+                                                        <span class="toggle-label">I send or receive
+                                                            digital currency</span>
+                                                    </label>
+                                                    <label class="toggle">
+                                                        <input class="toggle-checkbox" type="checkbox">
+                                                        <div class="toggle-switch"></div>
+                                                        <span class="toggle-label">I receive merchant order</span>
+                                                    </label>
+                                                    <label class="toggle">
+                                                        <input class="toggle-checkbox" type="checkbox">
+                                                        <div class="toggle-switch"></div>
+                                                        <span class="toggle-label">There are recommendation for my
+                                                            sccount</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-12">
+                                                    <button class="btn btn-success">Save</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="copyright">
+                            <p>© Copyright
+                                <script>
+                                    var CurrentYear = new Date().getFullYear()
+                                    document.write(CurrentYear)
+                                </script>
+                                <a href="#">Ekash</a> I All Rights Reserved
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="footer-social">
+                            <ul>
+                                <li><a href="#"><i class="fi fi-brands-facebook"></i></a></li>
+                                <li><a href="#"><i class="fi fi-brands-twitter"></i></a></li>
+                                <li><a href="#"><i class="fi fi-brands-linkedin"></i></a></li>
+                                <li><a href="#"><i class="fi fi-brands-youtube"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!--  -->
+    <!--  -->
+    <script src="js/scripts.js"></script>
+</body>
+
+
+<!-- Mirrored from ekash.pixcelsthemes.com/livepreview/ekash/settings-general.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Dec 2025 16:08:52 GMT -->
+</html>
