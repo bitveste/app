@@ -864,6 +864,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     body: JSON.stringify({
                                                         email: localStorage.getItem('email'),
                                                         offerId: offer.id,
+                                                        offerName: offer.offerName,
+                                                        fullName: (localStorage.getItem('fullName') || 'Investor'),
                                                         amount: allocationInputValue,
                                                         allocationId: allocationData.allocationId || allocationData.id || '123456789'
                                                     })
