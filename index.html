@@ -285,7 +285,6 @@
                         </span>
                         </div>
                     </div>
-
                     <div class="card-body">
                         <canvas id="profileWallet"></canvas>
                         <p class="small text-muted mt-2">
@@ -307,120 +306,12 @@
                             </div>
                             <div class="card-body">
                                 <div class="invoice-content">
-
                                 <ul id="dynamicOffersList"></ul>
-                                <button id="loadMoreOffersBtn" style="position:fixed;bottom:30px;right:30px;z-index:9999;display:none;background:#2F2CD8;color:#fff;border:none;border-radius:50px;padding:14px 28px;font-size:16px;box-shadow:0 4px 12px rgba(47,44,216,0.15);cursor:pointer;">Load More</button>
-                                <script>
-                                (function() {
-                                    // Helper to shuffle array
-                                    function shuffle(array) {
-                                        for (let i = array.length - 1; i > 0; i--) {
-                                            const j = Math.floor(Math.random() * (i + 1));
-                                            [array[i], array[j]] = [array[j], array[i]];
-                                        }
-                                        return array;
-                                    }
-
-                                    // Render a single offer card
-                                    function renderOfferCard(offer) {
-                                        return `
-                                        <li class="d-flex justify-content-between active flex-column align-items-start p-3 border mb-3 offer-card">
-                                            <div class="w-100 d-flex justify-content-between align-items-center mb-2">
-                                                <div>
-                                                    <h5 class="mb-1">${offer.title || 'Untitled Offer'}</h5>
-                                                    <span class="badge bg-primary">${offer.id ? 'ID-' + offer.id : ''}</span>
-                                                </div>
-                                                <div class="text-end">
-                                                    <span class="badge bg-success">${offer.status || 'Open'}</span>
-                                                </div>
-                                            </div>
-                                            <div class="w-100 mb-2">
-                                                <strong>Minimum Contribution:</strong> ${offer.minContribution || '-'}<br>
-                                                <strong>Potential Net Earnings:</strong> ${offer.potentialEarnings || '-'}<br>
-                                                <strong>Estimated Return:</strong> ${offer.estimatedReturn || '-'}
-                                            </div>
-                                            <div class="w-100 mb-2">
-                                                <strong>Use of Funds:</strong> ${offer.useOfFunds || '-'}
-                                            </div>
-                                            <div class="w-100 mb-2">
-                                                <strong>Return Model:</strong> ${offer.returnModel || '-'}<br>
-                                                <strong>Profit Distribution:</strong> ${offer.profitDistribution || '-'}
-                                            </div>
-                                            <div class="w-100 mb-2">
-                                                <strong>Settlement Period:</strong> ${offer.settlementPeriod || '-'}
-                                            </div>
-                                            <div class="w-100 mb-2">
-                                                <strong>Risk Disclosure:</strong> ${offer.riskDisclosure || '-'}
-                                            </div>
-                                            <div class="w-100 mb-2 text-center">
-                                                <a href="#" class="text-warning">-Discuss Offer-</a>
-                                            </div>
-                                            <div class="w-100 mb-2">
-                                                <a href="#" class="btn btn-outline-success btn-sm">Invest Now</a>
-                                            </div>
-                                        </li>
-                                        `;
-                                    }
-
-                                    // Main logic
-                                    const offersListEl = document.getElementById('dynamicOffersList');
-                                    const loadMoreBtn = document.getElementById('loadMoreOffersBtn');
-                                    let offers = [];
-                                    let currentIndex = 0;
-                                    const PAGE_SIZE = 10;
-
-                                    function loadOffersFromLocalStorage() {
-                                        let offersData = [];
-                                        try {
-                                            const raw = localStorage.getItem('investmentOffers');
-                                            if (raw) {
-                                                offersData = JSON.parse(raw);
-                                                if (!Array.isArray(offersData)) offersData = [];
-                                            }
-                                        } catch (e) {
-                                            offersData = [];
-                                        }
-                                        return offersData;
-                                    }
-
-                                    function renderNextOffers() {
-                                        const next = offers.slice(currentIndex, currentIndex + PAGE_SIZE);
-                                        next.forEach(offer => {
-                                            offersListEl.insertAdjacentHTML('beforeend', renderOfferCard(offer));
-                                        });
-                                        currentIndex += PAGE_SIZE;
-                                        if (currentIndex >= offers.length) {
-                                            loadMoreBtn.style.display = 'none';
-                                        } else {
-                                            loadMoreBtn.style.display = 'block';
-                                        }
-                                    }
-
-                                    function initOffers() {
-                                        offersListEl.innerHTML = '';
-                                        offers = loadOffersFromLocalStorage();
-                                        if (!offers.length) {
-                                            offersListEl.innerHTML = '<li class="text-center text-muted py-4">No investment offers found.</li>';
-                                            loadMoreBtn.style.display = 'none';
-                                            return;
-                                        }
-                                        offers = shuffle(offers);
-                                        currentIndex = 0;
-                                        renderNextOffers();
-                                    }
-
-                                    loadMoreBtn.addEventListener('click', renderNextOffers);
-
-                                    // Run on DOMContentLoaded and when user data is synced
-                                    document.addEventListener('DOMContentLoaded', initOffers);
-                                    document.addEventListener('userDataSynced', initOffers);
-
-                                    // Optionally, trigger a custom event in your dashboard.js after offers are updated:
-                                    // document.dispatchEvent(new Event('userDataSynced'));
-                                })();
-                                </script>
                                 </div>
                             </div>
+                            <p class="text-center">
+                                <button id="loadMoreOffersBtn" style="background:#2F2CD8;color:#fff;border:none;border-radius:0px;padding:7px 14px;font-size:12px;box-shadow:0 4px 12px rgba(47,44,216,0.15);cursor:pointer;display:none;">Load More</button>
+                            </p>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-6 col-md-12">

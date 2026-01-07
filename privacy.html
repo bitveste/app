@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<!--
+ // Name: ekash
+ // Description: Personal Finance Management Admin Dashboard App Template
+ // Version: 1.0.0
+ // Email : pixcelsthemes@gmail.com
+ // Author: Pixcels Themes
+ // URL: https://pixcelsthemes.com
+ // Themeforest Profile : https://themeforest.net/user/pixcelsthemes
+ // License: ISC
+-->
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ekash : Personal Finance Management Admin Dashboard HTML Template</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./vendor/toastr/toastr.min.css">
+</head>
+
+<body class="dashboard">
+    <div id="preloader" class="preloader-wrapper">
+        <div class="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <div id="main-wrapper">
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xxl-12">
+                        <div class="header-content">
+                            <div class="header-left">
+                                <div class="brand-logo"><a class="mini-logo" href="index.html"><img src="./images/logoi.png" alt="" width="40"></a></div>
+                                <div class="search">
+                                    <form action="#">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Search Here">
+                                            <span class="input-group-text"><i class="fi fi-br-search"></i></span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="header-right">
+                                <div class="dark-light-toggle" onclick="themeToggle()">
+                                    <span class="dark"><i class="fi fi-rr-eclipse-alt"></i></span>
+                                    <span class="light"><i class="fi fi-rr-eclipse-alt"></i></span>
+                                </div>
+                                <div class="nav-item dropdown notification">
+                                    <div data-bs-toggle="dropdown">
+                                        <div class="notify-bell icon-menu">
+                                            <span><i class="fi fi-rs-bells"></i></span>
+                                        </div>
+                                    </div>
+                                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-end">
+                                        <h4>Recent Notification</h4>
+                                        <div class="lists">
+                                            <a class="" href="#">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="me-3 icon success"><i class="fi fi-bs-check"></i></span>
+                                                    <div>
+                                                        <p>Account created successfully</p>
+                                                        <span>2024-11-04 12:00:23</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a class="" href="#">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="me-3 icon fail"><i class="fi fi-sr-cross-small"></i></span>
+                                                    <div>
+                                                        <p>2FA verification failed</p>
+                                                        <span>2024-11-04 12:00:23</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a class="" href="#">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="me-3 icon success"><i class="fi fi-bs-check"></i></span>
+                                                    <div>
+                                                        <p>Device confirmation completed</p>
+                                                        <span>2024-11-04 12:00:23</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a class="" href="#">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="me-3 icon pending"><i class="fi fi-rr-triangle-warning"></i></span>
+                                                    <div>
+                                                        <p>Phone verification pending</p>
+                                                        <span>2024-11-04 12:00:23</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="more">
+                                            <a href="notifications.html">More<i class="fi fi-bs-angle-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown profile_log dropdown">
+                                    <div data-bs-toggle="dropdown">
+                                        <div class="user icon-menu active"><span><i class="fi fi-rr-user"></i></span></div>
+                                    </div>
+                                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu dropdown-menu-end">
+                                        <div class="user-email">
+                                            <div class="user">
+                                                <span class="thumb"><img class="rounded-full" src="./images/avatar/3.jpg" alt=""></span>
+                                                <div class="user-info">
+                                                    <h5>Hafsa Humaira</h5>
+                                                    <span>hello@email.com</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a class="dropdown-item" href="profile.html">
+                                            <span><i class="fi fi-rr-user"></i></span>
+                                            Profile
+                                        </a>
+                                        <a class="dropdown-item" href="wallets.html">
+                                            <span><i class="fi fi-rr-wallet"></i></span>
+                                            Wallets
+                                        </a>
+                                        <a class="dropdown-item" href="settings.html">
+                                            <span><i class="fi fi-rr-settings"></i></span>
+                                            Settings
+                                        </a>
+                                        <a class="dropdown-item logout" href="signin.html">
+                                            <span><i class="fi fi-bs-sign-out-alt"></i></span>
+                                            Logout
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="brand-logo"><a class="full-logo" href="index.html"><img src="./images/logoi.png" alt="" width="30"></a>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li>
+                        <a href="index.html">
+                            <span>
+                                <i class="fi fi-rr-dashboard"></i>
+                            </span>
+                            <span class="nav-text">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="wallets.html">
+                            <span>
+                                <i class="fi fi-rr-wallet"></i>
+                            </span>
+                            <span class="nav-text">Wallets</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="budgets.html">
+                            <span>
+                                <i class="fi fi-rr-donate"></i>
+                            </span>
+                            <span class="nav-text">Budgets</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="goals.html">
+                            <span>
+                                <i class="fi fi-sr-bullseye-arrow"></i>
+                            </span>
+                            <span class="nav-text">Goals</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile.html">
+                            <span>
+                                <i class="fi fi-rr-user"></i>
+                            </span>
+                            <span class="nav-text">Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="analytics.html">
+                            <span>
+                                <i class="fi fi-rr-chart-histogram"></i>
+                            </span>
+                            <span class="nav-text">Analytics</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="support.html">
+                            <span>
+                                <i class="fi fi-rr-user-headset"></i>
+                            </span>
+                            <span class="nav-text">Support</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="affiliates.html">
+                            <span>
+                                <i class="fi fi-rs-link-alt"></i>
+                            </span>
+                            <span class="nav-text">Affiliates</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <span>
+                                <i class="fi fi-rs-settings"></i>
+                            </span>
+                            <span class="nav-text">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="content-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title">
+                            <div class="row align-items-center justify-content-between">
+                                <div class="col-xl-4">
+                                    <div class="page-title-content">
+                                        <h3>Privacy</h3>
+                                        <p class="mb-2">Welcome Ekash Finance Management</p>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="breadcrumbs"><a href="#">Home </a>
+                                        <span><i class="fi fi-rr-angle-small-right"></i></span>
+                                        <a href="#">Privacy</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Privacy and Poliicy </h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="privacy-content">
+                                    <p>Ekash is an instant personal finance management that allows you to exchange cash
+                                        fast and buy it with a bank card. The service provides the best cash-to-cash
+                                        rates and supports over 140 currencies available for exchange
+                                    </p>
+                                </div>
+                                <div class="privacy-content">
+                                    <h5>How does Ekash work? </h5>
+                                    <p>
+                                        Ekash trading algorithm is integrated into the largest personal finance management
+                                        platforms, including Binance, Poloniex, Bittrex, etc. In the span of milliseconds,
+                                        Ekash makes bids and asks on the platforms, then selects and suggests the best
+                                        available rate and displays the estimated rate on our site. The rates remain
+                                        approximate until the transaction is actually made on the blockchain, which is why
+                                        the exchange rate at the time of a transaction may differ slightly from the
+                                        estimated rate that you see when you begin a transaction. To learn more about the
+                                        process, see this <a href="#">article</a>
+                                    </p>
+                                </div>
+                                <div class="privacy-content">
+                                    <h5>Why should I trust you? </h5>
+                                    <p>Ekash is one of the most prominent instant personal finance managements that has
+                                        gained the trust of more than 2M users from all over the world. The service provides
+                                        safe and fast transactions without revealing users identities. We provide the best
+                                        possible rates by comparing a wide range of reliable trading platforms and work with
+                                        a list of 140+ currencies that is constantly increasing.</p>
+                                    <ul>
+                                        <li>
+                                            <i class="fi fi-ss-circle"></i>
+                                            <p>No deposit storage. </p>
+                                        </li>
+                                        <li>
+                                            <i class="fi fi-ss-circle"></i>
+                                            <p>Instant exchange. </p>
+                                        </li>
+                                        <li>
+                                            <i class="fi fi-ss-circle"></i>
+                                            <p>Each account is protected with 2-factor authentication and an HTTPS protocol.
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <i class="fi fi-ss-circle"></i>
+                                            <p>More than 2 million satisfied users.</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="privacy-content">
+                                    <h5>Does Ekash fix rates? </h5>
+                                    <p>Ekash mobile app does! Mobile app users will no longer be affected by the risks
+                                        associated with cash market fluctuations. Soon, the fixed-rate exchanges will also
+                                        be implemented on the web version. To lock the current exchange rate, the user needs
+                                        to click on the lock icon, which will result in them getting the exact same amount
+                                        of cash as is displayed on the screen. The rate is fixed for 15 minutes, which
+                                        should be more than enough to carry out the exchange.
+                                    </p>
+                                    <p> Alternatively, Ekash offers our lowest fee of 0.25% for all cash-to-cash
+                                        exchanges made at a floating rate.</p>
+                                </div>
+                                <div class="privacy-content">
+                                    <h5>No warranties : </h5>
+                                    <p>Ekash is provided “as is” without any representations or warranties. Ekash.com
+                                        makes no representations or warranties in relation to this website or the
+                                        information and materials provided on this website.</p>
+                                    <p>Ekash.com does not warrant that:</p>
+                                    <ul>
+                                        <li>
+                                            <i class="fi fi-ss-circle"></i>
+                                            <p>The website will be constantly available, or available at all moving forward.
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <i class="fi fi-ss-circle"></i>
+                                            <p>The information on this website is complete, true, or non-misleading.</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="privacy-content">
+                                    <h5>Privacy : </h5>
+                                    <p>For details about our privacy policy, please refer to the privacy policy section.</p>
+                                </div>
+                                <div class="privacy-content">
+                                    <h5>Unenforceable provisions : </h5>
+                                    <p>If any provision of this website disclaimer is, or is found to be, unenforceable
+                                        under applicable law, that will not affect the enforceability of the other
+                                        provisions of this website disclaimer.</p>
+                                </div>
+                                <div class="privacy-content">
+                                    <h5>Links : </h5>
+                                    <p>Responsibility for the content of external links (to web pages of third parties) lies
+                                        solely with the operators of the linked pages.</p>
+                                </div>
+                                <div class="privacy-content">
+                                    <h5>Modifications: </h5>
+                                    <p>Ekash.com may revise these terms of use for its website at any time without notice.
+                                        By using this web site you are agreeing to be bound by the then current version of
+                                        these terms of service.</p>
+                                </div>
+                                <div class="privacy-content">
+                                    <h5>Breaches of these terms and conditions: </h5>
+                                    <ul>
+                                        <li>
+                                            <i class="fi fi-ss-circle"></i>
+                                            <p>Ekash.com reserves the rights under these terms and conditions to take
+                                                action if you breach these terms and conditions in any way. </p>
+                                        </li>
+                                        <li>
+                                            <i class="fi fi-ss-circle"></i>
+                                            <p>Ekash.com may take such action as seems appropriate to deal with the
+                                                breach, including suspending your access to the website, suspending your
+                                                earnings made trough Ekash.com,prohibiting you from accessing the
+                                                website, or bringing court proceedings against you.</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="copyright">
+                            <p>© Copyright
+                                <script>
+                                    var CurrentYear = new Date().getFullYear()
+                                    document.write(CurrentYear)
+                                </script>
+                                <a href="#">Ekash</a> I All Rights Reserved
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="footer-social">
+                            <ul>
+                                <li><a href="#"><i class="fi fi-brands-facebook"></i></a></li>
+                                <li><a href="#"><i class="fi fi-brands-twitter"></i></a></li>
+                                <li><a href="#"><i class="fi fi-brands-linkedin"></i></a></li>
+                                <li><a href="#"><i class="fi fi-brands-youtube"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./vendor/jquery/jquery.min.js"></script>
+    <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!--  -->
+    <!--  -->
+    <script src="./js/scripts.js"></script>
+</body>
+
+</html>
