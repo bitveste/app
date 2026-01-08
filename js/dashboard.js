@@ -1131,19 +1131,9 @@ function renderActiveInvestmentsAndTransactions() {
 }
 ////////////////////
 ///////////////////
-
-/////////////
-/////////////////////////
-let magicLinkHandled = false;
-
-async function runAuthInterval() {
-    if (!magicLinkHandled) {
-        await handleMagicLinkLoginToken();
-        magicLinkHandled = true;
-    }
-    await fetchAndSyncAuthenticatedUser();
-    setInterval(fetchAndSyncAuthenticatedUser, 1000);
-}
-
-document.addEventListener("DOMContentLoaded", runAuthInterval);
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) {
+    fetchAndSyncAuthenticatedUser();
+  }
+});
 
