@@ -27,9 +27,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     await handleMagicLinkLoginToken();
     await fetchAndSyncAuthenticatedUser();
 });
-
-// Call handleMagicLinkLoginToken before anything else
-document.addEventListener("DOMContentLoaded", handleMagicLinkLoginToken);
     
 async function fetchAndSyncAuthenticatedUser() {
     const loginToken = localStorage.getItem("loginToken");
@@ -40,8 +37,15 @@ async function fetchAndSyncAuthenticatedUser() {
     }
 
     try {
-        // Decode token
-        const payload = JSON.parse(atob(loginToken.split(".")[1]));
+        // Decode token safely
+        let payload;
+        try {
+            payload = JSON.parse(atob(loginToken.split(".")[1]));
+        } catch {
+            localStorage.removeItem("loginToken");
+            window.location.href = "https://www.bitveste.com/signin";
+            return;
+        }
         localStorage.setItem("userEmail", payload.email);
         localStorage.setItem("userId", payload.userId);
 
@@ -52,11 +56,17 @@ async function fetchAndSyncAuthenticatedUser() {
             headers: {
                 Authorization: `Bearer ${loginToken}`,
                 "Content-Type": "application/json"
-            }
+            },
+            cache: "no-store"
         });
 
+        if (response.status === 304) {
+            console.log("ℹ️ User data not modified, using cached data");
+            return;
+        }
+
         if (!response.ok) {
-            throw new Error("Failed to fetch user data");
+            throw new Error("Failed to fetch user data: " + response.status);
         }
 
         const userData = await response.json();
@@ -140,9 +150,12 @@ async function fetchAndSyncAuthenticatedUser() {
 
     } catch (error) {
         console.error("⛔ User sync failed:", error);
-        localStorage.clear();
-        localStorage.removeItem("loginToken");
-        window.location.href = "https://www.bitveste.com/signin";
+        // Only log out on explicit auth errors
+        if (error.message.includes("401") || error.message.includes("403")) {
+            localStorage.removeItem("loginToken");
+            window.location.href = "https://www.bitveste.com/signin";
+        }
+        // Otherwise, do not clear localStorage or force logout on network/cache errors
     }
 }
 
