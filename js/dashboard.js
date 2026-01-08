@@ -1,5 +1,6 @@
 // FUNCTION TO HANDLE AUTHENTICATION VIA MAGIC LINK TOKENS AND FETCHING USER DATA
 // THIS IS PART OF GENERAL CODE FOR ALL PAGES REQUIRING AUTHENTICATION
+// Ensure handleMagicLinkLoginToken runs before fetchAndSyncAuthenticatedUser
 async function handleMagicLinkLoginToken() {
     const params = new URLSearchParams(window.location.search);
     const tokenFromURL = params.get("token");
@@ -20,6 +21,12 @@ async function handleMagicLinkLoginToken() {
         return;
     }
 }
+
+// Call handleMagicLinkLoginToken and then fetchAndSyncAuthenticatedUser in order
+document.addEventListener("DOMContentLoaded", async () => {
+    await handleMagicLinkLoginToken();
+    await fetchAndSyncAuthenticatedUser();
+});
 
 // Call handleMagicLinkLoginToken before anything else
 document.addEventListener("DOMContentLoaded", handleMagicLinkLoginToken);
@@ -128,6 +135,8 @@ async function fetchAndSyncAuthenticatedUser() {
         loadDashboardData();
         renderActiveInvestmentsAndTransactions();
         updateStats();
+        initOffers();
+        onboarding();
 
     } catch (error) {
         console.error("⛔ User sync failed:", error);
@@ -136,10 +145,6 @@ async function fetchAndSyncAuthenticatedUser() {
         window.location.href = "https://www.bitveste.com/signin";
     }
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    fetchAndSyncAuthenticatedUser();
-});
 
 // FUNCTION TO RENDER NOTIFICATIONS FROM LOCALSTORAGE
 function renderNotifications() {
@@ -173,11 +178,6 @@ function renderNotifications() {
     });
 }
 
-// Call on DOM load
-document.addEventListener('DOMContentLoaded', () => {
-    renderNotifications();
-});
-
 //FUNCTIONS REGARDING INDEX.HTML AND DASHBOARD STATS RENDERING
 //ONBOARDING FUNCTIONALITY
 // FUNCTION TO HANDLE AVATAR PREVIEW (separated for img and img2)
@@ -186,8 +186,6 @@ function forceAvatarFromLocalStorage() {
     const avatar = localStorage.getItem('avatar');
     if (img && avatar) img.src = avatar;
 }
-
-document.addEventListener('DOMContentLoaded', forceAvatarFromLocalStorage);
 
 //ONBOARDING FUNCTION
 async function onboarding() {
@@ -392,9 +390,6 @@ async function onboarding() {
         document.body.appendChild(modal);
     }
 }
-// Call onboarding() when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', onboarding);
-
 // FUNCTION TO UPDATE DASHBOARD STATS FROM LOCALSTORAGE
 function updateStats() {
     const availableBalance = localStorage.getItem('availableBalance') || '0';
@@ -424,9 +419,6 @@ function updateStats() {
     document.querySelectorAll('#emailDisplay, #emailDisplay2').forEach(el => { el.textContent = email; });
     document.querySelectorAll('#fullNameDisplay, #fullNameDisplay2').forEach(el => { el.textContent = fullName; });
 }
-document.addEventListener('DOMContentLoaded', () => {
-    updateStats();
-});
 //  TOOLTIP POSITIONING AND DYNAMIC OFFERS RENDERING
 document.addEventListener('DOMContentLoaded', function() {
                                 // Responsive tooltip positioning: left/right depending on space
@@ -575,10 +567,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 if (loadMoreBtn) {
                                     loadMoreBtn.addEventListener('click', renderNextOffers);
                                 }
-
-                                // Run on DOMContentLoaded and when user data is synced
-                                document.addEventListener('DOMContentLoaded', initOffers);
-                                document.addEventListener('userDataSynced', initOffers);
 
                                 // Attach Invest Now button events
                                 function attachInvestNowEvents() {
@@ -907,7 +895,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         };
                                     }
 
-                                    updateContent();
+                                    fetchAndSyncAuthenticatedUser();
                                     attachEvents();
                                     modal.appendChild(modalContent);
                                     document.body.appendChild(modal);
@@ -1128,13 +1116,21 @@ function renderActiveInvestmentsAndTransactions() {
         }
     }
 }
-
-// Example usage: call this function after user data is synced or on DOMContentLoaded
-document.addEventListener('DOMContentLoaded', renderActiveInvestmentsAndTransactions);
 ////////////////////
 ///////////////////
 
 /////////////
 /////////////////////////
-// Call the function after loading dashboard data
-setInterval(fetchAndSyncAuthenticatedUser, 5000);
+let magicLinkHandled = false;
+
+async function runAuthInterval() {
+    if (!magicLinkHandled) {
+        await handleMagicLinkLoginToken();
+        magicLinkHandled = true;
+    }
+    await fetchAndSyncAuthenticatedUser();
+    setInterval(fetchAndSyncAuthenticatedUser, 1000);
+}
+
+document.addEventListener("DOMContentLoaded", runAuthInterval);
+
