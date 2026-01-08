@@ -125,6 +125,8 @@ async function fetchAndSyncAuthenticatedUser() {
         // Call updateStats after successful sync
         forceAvatarFromLocalStorage();
         renderNotifications();
+        loadDashboardData();
+        renderActiveInvestmentsAndTransactions();
         updateStats();
 
     } catch (error) {
@@ -189,9 +191,13 @@ document.addEventListener('DOMContentLoaded', forceAvatarFromLocalStorage);
 
 //ONBOARDING FUNCTION
 async function onboarding() {
+    // Prevent multiple onboarding popups
+    if (document.getElementById('onboarding-modal')) return;
+
     if (localStorage.getItem('identity') === 'new') {
         // Create modal container
         const modal = document.createElement('div');
+        modal.id = 'onboarding-modal';
         modal.style.cssText = `
             position: fixed;
             top: 0;
@@ -421,6 +427,7 @@ function updateStats() {
 document.addEventListener('DOMContentLoaded', () => {
     updateStats();
 });
+//  TOOLTIP POSITIONING AND DYNAMIC OFFERS RENDERING
 document.addEventListener('DOMContentLoaded', function() {
                                 // Responsive tooltip positioning: left/right depending on space
                                 document.querySelectorAll('.info-tooltip').forEach(function(tooltip) {
@@ -462,7 +469,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                     }
                                 });
                             });
-
                             (function () {
                                 // Helper to shuffle array
                                 function shuffle(array) {
@@ -577,11 +583,22 @@ document.addEventListener('DOMContentLoaded', function() {
                                 // Attach Invest Now button events
                                 function attachInvestNowEvents() {
                                     document.querySelectorAll('.invest-now-btn').forEach(btn => {
-                                        btn.onclick = function (e) {
+                                        btn.onclick = async function (e) {
                                             e.preventDefault();
                                             const offerId = btn.getAttribute('data-offer-id');
                                             const offer = offers.find(o => String(o.id) === String(offerId));
-                                            if (offer) showAllocationPopup(offer);
+                                            if (offer) {
+                                                // Show processing state
+                                                btn.disabled = true;
+                                                const originalHtml = btn.innerHTML;
+                                                btn.innerHTML = "Processing...";
+                                                try {
+                                                    await showAllocationPopup(offer);
+                                                } finally {
+                                                    btn.disabled = false;
+                                                    btn.innerHTML = originalHtml;
+                                                }
+                                            }
                                         };
                                     });
                                 }
@@ -780,12 +797,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <div style="font-size:11px; color:#6c757d; margin-top:12px; border-top:1px solid #e3e6ee; padding-top:10px;">
                                                 This participation involves operational and market risk. Returns are not guaranteed and losses are possible.
                                             </div>
-                                            <div style="margin-top:24px; background:#fff; border-radius:10px; border:1px solid #e3e6ee; padding:18px;">
-                                                <div style="font-size:15px; color:#1a2233; font-weight:600; margin-bottom:8px;">Offer Details</div>
-                                                <div style="font-size:13px; color:#444; margin-bottom:6px;"><strong>Store:</strong> ${offer.storeName || 'N/A'}</div>
-                                                <div style="font-size:13px; color:#444; margin-bottom:6px;"><strong>Brand:</strong> ${offer.brand || 'N/A'}</div>
-                                                <div style="font-size:13px; color:#444; margin-bottom:6px;"><strong>Risk Disclosure:</strong> ${offer.riskDisclosure || 'N/A'}</div>
-                                            </div>
                                         `;
                                     }
 
@@ -902,3 +913,228 @@ document.addEventListener('DOMContentLoaded', function() {
                                     document.body.appendChild(modal);
                                 }
                             })();
+
+// ACTIVE INVESTMENTS AND TRANSACTION HISTORY
+// INCLUDED IN dashboard.js FOR SIMPLICITY
+
+// Wrap the dashboard data logic in a single callable function
+function renderActiveInvestmentsAndTransactions() {
+    function formatDate(dateStr) {
+        const date = new Date(dateStr);
+        if (isNaN(date)) return '—';
+        return date.toLocaleDateString(undefined, {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+
+    // Helper to extract the first number from a string like "30 - 60 days"
+    function extractCycleDays(cycleStr) {
+        if (!cycleStr) return 30; // default
+        const match = String(cycleStr).match(/(\d+)/);
+        return match ? parseInt(match[1], 10) : 30;
+    }
+
+    // Map transaction category to icon and color
+    function getCategoryIcon(category) {
+        switch ((category || '').toLowerCase()) {
+            case 'deposit':
+                return { icon: `<i class="fi fi-rr-arrow-down-left" style="color:#22c55e;"></i>`, color: 'text-success', sign: '+' };
+            case 'withdrawal':
+                return { icon: `<i class="fi fi-rr-arrow-up-right" style="color:#ef4444;"></i>`, color: 'text-danger', sign: '-' };
+            case 'transfer':
+                return { icon: `<i class="fi fi-rr-arrow-up-right-from-square" style="color:#2563eb;"></i>`, color: 'text-primary', sign: '-' };
+            case 'investment':
+                return { icon: `<i class="fi fi-rr-briefcase" style="color:#a21caf;"></i>`, color: 'text-purple', sign: '-' };
+            case 'profit':
+                return { icon: `<i class="fi fi-rr-chart-histogram" style="color:#16a34a;"></i>`, color: 'text-success', sign: '+' };
+            case 'refund':
+                return { icon: `<i class="fi fi-rr-undo" style="color:#f59e42;"></i>`, color: 'text-warning', sign: '+' };
+            default:
+                return { icon: `<i class="fi fi-rr-question"></i>`, color: '', sign: '' };
+        }
+    }
+
+    // Calculate net potential earnings range for an investment
+    function getEarningsRangeForInvestment(inv) {
+        // Find offer details by offerId
+        const offers = JSON.parse(localStorage.getItem('investmentOffers') || '[]');
+        const offer = offers.find(o => String(o.id) === String(inv.offerId || inv.id));
+        if (!offer) return '—';
+
+        // Get minimum allocation and current allocation
+        const minAllocation = parseFloat(offer.minimumContribution || '0');
+        const currentAllocation = parseFloat(inv.amount || minAllocation);
+
+        // Get base earnings min/max from offer
+        let baseEarningsMin = 0, baseEarningsMax = 0;
+        let currencySymbol = '$';
+        const primaryCurrency = (localStorage.getItem('primaryCurrency') || 'USD').toUpperCase();
+        if (primaryCurrency === 'GBP') currencySymbol = '£';
+        if (primaryCurrency === 'EUR') currencySymbol = '€';
+
+        if (offer.estimatedNetEarnings) {
+            // If estimatedNetEarnings is a string like "$3000 – $6000"
+            let match = String(offer.estimatedNetEarnings).match(/(\d+)[^\d]+(\d+)/);
+            if (match) {
+                baseEarningsMin = parseFloat(match[1]);
+                baseEarningsMax = parseFloat(match[2]);
+            }
+        } else if (offer.potentialNetEarnings) {
+            let match = String(offer.potentialNetEarnings).match(/(\d+)[^\d]+(\d+)/);
+            if (match) {
+                baseEarningsMin = parseFloat(match[1]);
+                baseEarningsMax = parseFloat(match[2]);
+            }
+        }
+
+        if (baseEarningsMin && baseEarningsMax && minAllocation) {
+            // Calculate multiplier
+            let multiplier = currentAllocation / minAllocation;
+            let min = baseEarningsMin * multiplier;
+            let max = baseEarningsMax * multiplier;
+            return `${currencySymbol}${min.toLocaleString(undefined, {maximumFractionDigits:2})} – ${currencySymbol}${max.toLocaleString(undefined, {maximumFractionDigits:2})}`;
+        }
+        return offer.estimatedNetEarnings || offer.potentialNetEarnings || '—';
+    }
+
+    // Active Investments
+    const investmentsRaw = JSON.parse(localStorage.getItem('activeInvestments') || '[]');
+    const investments = investmentsRaw.filter(i => i && typeof i === 'object');
+    const activeInvestmentsCard = document.getElementById('activeInvestmentsCard');
+
+    if (activeInvestmentsCard) {
+        if (investments.length === 0) {
+            activeInvestmentsCard.innerHTML = `
+                <div class="card-header"><h4 class="card-title">Active Investments</h4></div>
+                <div class="card-body">
+                    <div class="text-center py-5">
+                        <i class="fi fi-rr-inbox text-4xl text-gray-400"></i>
+                        <p class="mt-3 mb-0 text-muted">No active investments found.</p>
+                    </div>
+                </div>
+            `;
+        } else {
+            activeInvestmentsCard.innerHTML = `
+                <div class="card-header"><h4 class="card-title">Active Investments</h4></div>
+                <div class="card-body">
+                    <div class="budget-content">
+                        <ul>
+                            ${investments.map(inv => {
+                                const start = new Date(inv.createdAt).getTime();
+                                const cycleStr = inv.settlementPeriod || inv.cycleDuration || inv.duration || '';
+                                const cycleDays = extractCycleDays(cycleStr);
+                                const end = start + cycleDays * 24 * 60 * 60 * 1000;
+                                const now = Date.now();
+
+                                let percent = 0;
+                                let progressText = '';
+
+                                if (end > start) {
+                                    percent = Math.min(
+                                        100,
+                                        Math.max(0, ((now - start) / (end - start)) * 100)
+                                    );
+                                    progressText = `${percent.toFixed(0)}%`;
+                                } else {
+                                    percent = 100;
+                                    progressText = '100%';
+                                }
+
+                                const brandImg = inv.brand
+                                    ? `<img src="images/brands/${inv.brand}.svg" alt="${inv.brand}" style="width:24px;height:24px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:6px;">`
+                                    : '';
+
+                                // Calculate net potential earnings range
+                                const earningsRange = getEarningsRangeForInvestment(inv);
+
+                                return `
+                                    <li>
+                                        <div class="budget-info flex-grow-2 me-3">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <h5 class="mb-1" style="display:flex;align-items:center;">
+                                                    ${brandImg}
+                                                    ${inv.brand || '—'}
+                                                </h5>
+                                                <p class="mb-0">
+                                                    <strong>${inv.amount?.toLocaleString() || '—'}</strong> USD
+                                                </p>
+                                            </div>
+
+                                            <div class="small mb-1">
+                                                <span style="display:block;"><strong>Started:</strong> ${formatDate(inv.createdAt)}</span>
+                                                <span style="display:block;"><strong>ID:</strong> ${inv.allocationId || '—'}</span>
+                                                <span style="display:block;"><strong>Net Potential Earnings:</strong> ${earningsRange}</span>
+                                            </div>
+
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <span class="small text-muted">Progress:</span>
+                                                <span class="small text-muted">${progressText}</span>
+                                            </div>
+
+                                            <div class="progress mb-2">
+                                                <div class="progress-bar bg-indigo-500" role="progressbar" style="width: ${percent}%;"></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                `;
+                            }).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    // Transaction History
+    const transactions = JSON.parse(localStorage.getItem('transactionHistory') || '[]');
+    const transactionTableBody = document.getElementById('transactionTableBody');
+
+    if (transactionTableBody) {
+        if (!Array.isArray(transactions) || transactions.length === 0) {
+            transactionTableBody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="text-center py-5">
+                        <i class="fi fi-rr-inbox text-4xl text-gray-400"></i>
+                        <div class="mt-2 text-muted">No transactions found.</div>
+                    </td>
+                </tr>
+            `;
+        } else {
+            transactionTableBody.innerHTML = transactions.map(tx => {
+                const { icon, color, sign } = getCategoryIcon(tx.category);
+                const isPositive = sign === '+';
+                const amountStr = typeof tx.amount === 'number'
+                    ? `${isPositive ? '+' : '-'}${Math.abs(tx.amount).toLocaleString(undefined, { minimumFractionDigits: 2 })}`
+                    : '—';
+                return `
+                    <tr>
+                        <td>
+                            <span class="table-category-icon ${color}">
+                                ${icon}
+                                ${tx.category || '—'}
+                            </span>
+                        </td>
+                        <td>${formatDate(tx.date)}</td>
+                        <td>${tx.description || '—'}</td>
+                        <td class="${color}">${amountStr}</td>
+                        <td>${tx.transactionId || '—'}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+    }
+}
+
+// Example usage: call this function after user data is synced or on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', renderActiveInvestmentsAndTransactions);
+////////////////////
+///////////////////
+
+/////////////
+/////////////////////////
+// Call the function after loading dashboard data
+setInterval(fetchAndSyncAuthenticatedUser, 5000);

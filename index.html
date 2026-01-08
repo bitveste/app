@@ -314,75 +314,10 @@
                             </p>
                         </div>
                     </div>
+
                     <div class="col-xl-4 col-lg-6 col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Active Investments</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="budget-content">
-                                    <ul>
-                                        <li>
-                                            <div class="budget-info flex-grow-2 me-3">
-                                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                                    <h5 class="mb-1"><i class="bg-green-500 fi fi-rr-carrot"></i>Projected Earnings</h5>
-                                                    <p class="mb-0"><strong>75 </strong>/ 100</p>
-                                                </div>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-green-500" role="progressbar" style="width: 75%;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="budget-info flex-grow-2 me-3">
-                                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                                    <h5 class="mb-1"><i class="bg-cyan-500 fi fi-rr-bus"></i>Realized Profit
-                                                    </h5>
-                                                    <p class="mb-0"><strong>25 </strong>/ 100</p>
-                                                </div>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-cyan-500" role="progressbar" style="width: 25%;"></div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="budget-info flex-grow-2 me-3">
-                                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                                    <h5 class="mb-1"><i class="bg-sky-500 fi fi-sr-cat"></i>Pending Profit</h5>
-                                                    <p class="mb-0"><strong>50 </strong>/ 100</p>
-                                                </div>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-sky-500" role="progressbar" style="width: 50%;"></div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="budget-info flex-grow-2 me-3">
-                                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                                    <h5 class="mb-1"><i class="bg-indigo-500 fi fi-rr-graduation-cap"></i>Average ROI</h5>
-                                                    <p class="mb-0"><strong>45 </strong>/ 100</p>
-                                                </div>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-indigo-500" role="progressbar" style="width: 45%;"></div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="budget-info flex-grow-2 me-3">
-                                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                                    <h5 class="mb-1"><i class="bg-violet-500 fi fi-rr-shirt-long-sleeve"></i>Net Earnings Summary
-                                                    </h5>
-                                                    <p class="mb-0"><strong>35 </strong>/ 100</p>
-                                                </div>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-violet-500" role="progressbar" style="width: 35%;"></div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                        <div class="card" id="activeInvestmentsCard">
+                            <!-- Dynamic content will be injected here -->
                         </div>
                     </div>
                     <div class="col-xl-8">
@@ -396,93 +331,15 @@
                                         <table class="table mb-0 table-responsive-sm">
                                             <thead>
                                                 <tr>
-                                                    <th>Category</th>
+                                                    <th>Type</th>
                                                     <th>Date</th>
                                                     <th>Description</th>
                                                     <th>Amount</th>
-                                                    <th>Currency</th>
+                                                    <th>Transaction ID</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <span class="table-category-icon"><i class="bg-emerald-500 fi fi-rr-barber-shop"></i>
-                                                            Beauty</span>
-                                                    </td>
-                                                    <td>
-                                                        12.12.2023
-                                                    </td>
-                                                    <td>
-                                                        Grocery Items and Beverage soft drinks
-                                                    </td>
-                                                    <td>
-                                                        -32.20
-                                                    </td>
-                                                    <td>USD</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span class="table-category-icon"><i class="bg-teal-500 fi fi-rr-receipt"></i> Bills &
-                                                            Fees</span>
-                                                    </td>
-                                                    <td>
-                                                        12.12.2023
-                                                    </td>
-                                                    <td>
-                                                        Grocery Items and Beverage soft drinks
-                                                    </td>
-                                                    <td>
-                                                        -32.20
-                                                    </td>
-                                                    <td>USD</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span class="table-category-icon"><i class="bg-cyan-500 fi fi-rr-car-side"></i> Car</span>
-                                                    </td>
-                                                    <td>
-                                                        12.12.2023
-                                                    </td>
-                                                    <td>
-                                                        Grocery Items and Beverage soft drinks
-                                                    </td>
-                                                    <td>
-                                                        -32.20
-                                                    </td>
-                                                    <td>USD</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span class="table-category-icon"><i class="bg-sky-500 fi fi-rr-graduation-cap"></i>
-                                                            Education</span>
-                                                    </td>
-                                                    <td>
-                                                        12.12.2023
-                                                    </td>
-                                                    <td>
-                                                        Grocery Items and Beverage soft drinks
-                                                    </td>
-                                                    <td>
-                                                        -32.20
-                                                    </td>
-                                                    <td>USD</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <span class="table-category-icon"><i class="bg-blue-500 fi fi-rr-clapperboard-play"></i>
-                                                            Entertainment</span>
-                                                    </td>
-                                                    <td>
-                                                        12.12.2023
-                                                    </td>
-                                                    <td>
-                                                        Grocery Items and Beverage soft drinks
-                                                    </td>
-                                                    <td>
-                                                        -32.20
-                                                    </td>
-                                                    <td>USD</td>
-                                                </tr>
+                                            <tbody id="transactionTableBody">
+                                                <!-- Dynamic content will be injected here -->
                                             </tbody>
                                         </table>
                                     </div>
