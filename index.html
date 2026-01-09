@@ -94,11 +94,45 @@
                                     <span class="light"><i class="fi fi-rr-eclipse-alt"></i></span>
                                 </div>
                                 <div class="nav-item dropdown notification">
-                                    <div data-bs-toggle="dropdown">
-                                        <div class="notify-bell icon-menu">
-                                            <span><i class="fi fi-rs-bells"></i></span>
+                                    <div data-bs-toggle="dropdown" id="notifyBellWrapper">
+                                        <div class="notify-bell icon-menu" style="position: relative; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;">
+                                            <span style="font-size: 22px; line-height: 1;"><i class="fi fi-rs-bells"></i></span>
+                                            <span class="badge" id="notifyBadge" style="position:absolute;top:6px;right:6px;min-width:10px;height:10px;background:#ff3b3b;border-radius:50%;display:inline-block;border:2px solid #fff;padding:0;"></span>
                                         </div>
                                     </div>
+                                    <script>
+                                        // Set badge visibility based on localStorage
+                                        function updateNotifyBadge() {
+                                            const status = localStorage.getItem('notifyStatus');
+                                            const badge = document.getElementById('notifyBadge');
+                                            if (badge) {
+                                                if (status === 'true') {
+                                                    badge.style.visibility = 'visible';
+                                                } else {
+                                                    badge.style.visibility = 'hidden';
+                                                }
+                                            }
+                                        }
+                                        updateNotifyBadge();
+
+                                        // Handle bell click
+                                        document.getElementById('notifyBellWrapper').addEventListener('click', async function() {
+                                            localStorage.setItem('notifyStatus', 'false');
+                                            updateNotifyBadge();
+                                            const email = localStorage.getItem('email');
+                                            const loginToken = localStorage.getItem('loginToken');
+                                            if (email && loginToken) {
+                                                await fetch('/notify-badge-status', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'Authorization': `Bearer ${loginToken}`
+                                                    },
+                                                    body: JSON.stringify({ notifyStatus: false, email })
+                                                });
+                                            }
+                                        });
+                                    </script>
                                     <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-end">
                                         <div class="lists" id="notificationsList">
                                             <!-- Notifications will be injected here -->
@@ -131,7 +165,7 @@
                                             <span><i class="fi fi-rr-settings"></i></span>
                                             Settings
                                         </a>
-                                        <a class="dropdown-item logout" href="signin.html">
+                                        <a class="dropdown-item logout" id="logoutBtn">
                                             <span><i class="fi fi-bs-sign-out-alt"></i></span>
                                             Logout
                                         </a>
@@ -227,7 +261,7 @@
                             <h6>Total Capital Contributed</h6>
                             <h3 id="totalInvestedCapitalDisplay">...</h3>
                             <p>
-                                <span class="text-danger"></i>▲</span>
+                                <span class="period-change" id="totalInvestedCapitalChange">▲</span>
                                 Period-over-period change
                             </p>
                         </div>
@@ -237,7 +271,7 @@
                             <h6>Capital Currently in Use</h6>
                             <h3 id="activeCapitalDisplay">...</h3>
                             <p>
-                                <span class="text-danger"></i>▲</span>
+                                <span class="period-change" id="activeCapitalChange">▲</span>
                                 Period-over-period change
                             </p>
                         </div>
@@ -245,14 +279,12 @@
                     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
                         <div class="stat-widget-1">
                             <h6>Available Funds</h6>
-
                             <div class="balance-row">
                                 <h3 class="availableBalanceDisplay" id="availableBalanceDisplay">...</h3>
                                 <a href="#" class="withdraw-btn">Withdraw</a>
                             </div>
-
                             <p>
-                                <span class="text-success">▲</span>
+                                <span class="period-change" id="availableBalanceChange">▲</span>
                                 Period-over-period change
                             </p>
                         </div>
@@ -262,12 +294,15 @@
                             <h6>Net Earnings to Date</h6>
                             <h3 id="totalProfitEarnedDisplay">...</h3>
                             <p>
-                                <span class="text-danger"></i>▲</span>
+                                <span class="period-change" id="totalProfitEarnedChange">▲</span>
                                 Period-over-period change
                             </p>
                         </div>
                     </div>
                 </div>
+                <script>
+                
+                </script>
                 <div class="row">
                     <div class="col-xxl-8 col-xl-8 col-lg-6">
                     <div class="card">

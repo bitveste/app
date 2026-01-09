@@ -19155,3 +19155,26 @@ a.withdraw-btn:hover::after {
                                             background: #22c55e !important;
                                             color: #fff !important;
                                         }
+/* ===============================
+   PERFECT SCROLLBAR CONTAINERS
+   =============================== */
+
+/* Investment Offers */
+.invoice-content {
+    max-height: 420px;
+    overflow: hidden;        /* REQUIRED for PerfectScrollbar */
+    position: relative;
+}
+
+/* Active Investments */
+.budget-content {
+    max-height: 360px;
+    overflow: hidden;        /* REQUIRED for PerfectScrollbar */
+    position: relative;
+}
+
+/* Smooth list spacing */
+.invoice-content ul,
+.budget-content ul {
+    padding-right: 8px;
+}
