@@ -148,6 +148,7 @@ async function fetchAndSyncAuthenticatedUser() {
         renderNotifications();
         initOffers();
         renderActiveInvestmentsAndTransactions();
+        updateNotifyBadge();
     } catch (error) {
         console.error("⛔ User sync failed:", error);
         // Only log out on explicit auth errors
@@ -1213,6 +1214,40 @@ function initOffers() {
             }
         }
     }
+
+///////////
+//UPDATE NOTIFY BADGE//
+// Set badge visibility based on localStorage
+                                        function updateNotifyBadge() {
+                                            const status = localStorage.getItem('notifyStatus');
+                                            const badge = document.getElementById('notifyBadge');
+                                            if (badge) {
+                                                if (status === 'true') {
+                                                    badge.style.visibility = 'visible';
+                                                } else {
+                                                    badge.style.visibility = 'hidden';
+                                                }
+                                            }
+                                        }
+                                        updateNotifyBadge();
+
+                                        // Handle bell click
+                                        document.getElementById('notifyBellWrapper').addEventListener('click', async function() {
+                                            localStorage.setItem('notifyStatus', 'false');
+                                            updateNotifyBadge();
+                                            const email = localStorage.getItem('email');
+                                            const loginToken = localStorage.getItem('loginToken');
+                                            if (email && loginToken) {
+                                                await fetch('https://api.bitveste.com/api/notify-badge-status', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'Authorization': `Bearer ${loginToken}`
+                                                    },
+                                                    body: JSON.stringify({ notifyStatus: false, email })
+                                                });
+                                            }
+                                        });
 ////////////////////
 //LOGOUT HANDLER//
                                             document.getElementById('logoutBtn').addEventListener('click', function(e) {
