@@ -5742,9 +5742,7 @@ textarea.form-control-lg {
 }
 .list-group-item.active {
   z-index: 2;
-  color: var(--bs-list-group-active-color);
-  background-color: var(--bs-list-group-active-bg);
-  border-color: var(--bs-list-group-active-border-color);
+  color: #2F2CD8;
 }
 .list-group-item + .list-group-item {
   border-top-width: 0;
@@ -19178,3 +19176,19 @@ a.withdraw-btn:hover::after {
 .budget-content ul {
     padding-right: 8px;
 }
+
+                    .funding-source-item.active .source-label {
+                        font-size: 1.25rem;
+                    }
+                    .funding-source-item .source-label {
+                        font-size: 1rem;
+                        transition: font-size 0.2s;
+                    }
+                    .funding-source-item .arrow-indicator {
+                        transition: opacity 0.2s;
+                        opacity: 0;
+                    }
+                    .funding-source-item.active .arrow-indicator {
+                        display: inline !important;
+                        opacity: 1;
+                    }

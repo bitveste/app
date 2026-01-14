@@ -207,10 +207,13 @@ document.addEventListener('DOMContentLoaded', () => {
 function forceAvatarFromLocalStorage2() {
     const img2 = document.getElementById('avatarPreview2');
     const avatar = localStorage.getItem('avatar');
-    if (img2 && avatar) {
+    if (!img2) return;
+    if (avatar === 'images/avatar/3.jpg') {
+        const fullName = (localStorage.getItem('fullName') || '').trim();
+        const firstLetter = fullName.charAt(0).toLowerCase();
+        img2.src = `images/avatar/${firstLetter}.png`;
+    } else if (avatar) {
         img2.src = avatar;
-    } else if (!img2) {
-        console.warn("Element with id 'avatarPreview2' not found in DOM.");
     }
 }
 
@@ -483,3 +486,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
         });
+
+        // Call handleMagicLinkLoginToken and then fetchAndSyncAuthenticatedUser in order
+document.addEventListener("DOMContentLoaded", async () => {
+    await fetchAndSyncAuthenticatedUser();
+});

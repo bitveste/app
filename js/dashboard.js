@@ -243,6 +243,111 @@ function forceAvatarFromLocalStorage() {
     }
 }
 
+//SEARCH BAR FUNCTIONS AND EVENTS
+(function () {
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+    const searchIcon = document.getElementById('searchIcon');
+
+    /* ===============================
+       HARD STOP: PREVENT FORM SUBMIT
+    ================================ */
+    searchForm.addEventListener('submit', function (e) {
+        e.preventDefault(); // 🚫 blocks ALL redirects
+        runSearch();
+    });
+
+    /* ENTER KEY */
+    searchInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            runSearch();
+        }
+    });
+
+    /* CLICK SEARCH ICON */
+    searchIcon.addEventListener('click', function () {
+        runSearch();
+    });
+
+    /* ===============================
+       SEARCH HANDLER
+    ================================ */
+    function runSearch() {
+        const query = searchInput.value.toLowerCase().trim();
+
+        if (!query) {
+            showMessage('Nothing to search', true);
+            return;
+        }
+
+        handleSearch(query);
+    }
+
+    /* ===============================
+       ROUTING LOGIC
+    ================================ */
+    function handleSearch(query) {
+        const searchMap = {
+            deposit: { page: 'wallets.html', section: '#deposit-funds' },
+            withdraw: { page: 'wallets.html', section: '#withdraw-funds' },
+            help: { page: 'support.html', section: null },
+            faq: { page: 'support.html', section: '#faqs' },
+            verification: { page: 'settings.html', section: '#verification' },
+            security: { page: 'settings-security.html', section: '#security' },
+            wallet: { page: 'wallets.html', section: null },
+            profile: { page: 'settings-profile.html', section: null },
+            settings: { page: 'settings.html', section: null },
+            support: { page: 'support.html', section: null },
+            affiliate: { page: 'affiliates.html', section: null },
+            transaction: { page: 'index.html', section: '#transaction-history' },
+            investment: { page: 'index.html', section: '#active-investments' },
+            balance: { page: 'index.html', section: '#balance-trends' },
+            home: { page: 'index.html', section: null }
+        };
+
+        const result = Object.entries(searchMap).find(
+            ([key]) => key.includes(query) || query.includes(key)
+        );
+
+        if (!result) {
+            showMessage('No results found for: ' + query, true);
+            return;
+        }
+
+        const [, { page, section }] = result;
+
+        if (
+            page === 'index.html' &&
+            section &&
+            window.location.pathname.endsWith('index.html')
+        ) {
+            document.querySelector(section)?.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            window.location.href = page;
+        }
+    }
+
+    /* ===============================
+       MESSAGE DISPLAY
+    ================================ */
+    function showMessage(message, isError = false) {
+        const messageBox = document.getElementById('message');
+        if (!messageBox) return;
+
+        const icon = isError
+            ? '<svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>'
+            : '<svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>';
+
+        messageBox.innerHTML = `${icon} ${message}`;
+        messageBox.className = isError ? 'error show' : 'success show';
+
+        setTimeout(() => {
+            messageBox.classList.remove('show');
+        }, 4000);
+    }
+})();
+
 //ONBOARDING FUNCTION
 async function onboarding() {
     // Prevent multiple onboarding popups
